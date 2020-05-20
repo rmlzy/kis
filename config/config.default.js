@@ -17,8 +17,10 @@ module.exports = (appInfo) => {
 
   // TDK
   config.title = "Yuan's Develop Field";
-  config.subtitle = "TypeScript at day, Python at night.";
-  config.description = "远子的开发试验田, 尝试各种新奇的编程开发技术";
+  config.subtitle =
+    "<p><a href='https://github.com/rmlzy' target='_blank'>远子</a>的开发试验田</p>" +
+    "<p>记录一些编程日志 & 尝试新奇的编程技术</p>";
+  config.description = "远子的开发试验田, 记录一些编程日志, 尝试新奇的编程技术";
   config.keywords = "rmlzy, 远子, 前端开发, 技术博客";
   config.author = {
     name: "Jason Liu",

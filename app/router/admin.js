@@ -33,6 +33,8 @@ module.exports = (app) => {
   router.post("/api/v1/blog", logged(), controller.api.blog.create);
   router.put("/api/v1/blog/:id", logged(), controller.api.blog.update);
   router.delete("/api/v1/blog/:id", logged(), controller.api.blog.delete);
+  router.put("/api/v1/blog/:id/like", controller.api.blog.like);
+  router.put("/api/v1/blog/:id/dislike", controller.api.blog.dislike);
 
   // Tag
   router.get("/api/v1/tag/:id", logged(), controller.api.tag.detail);

@@ -70,6 +70,58 @@ class BlogController extends Controller {
     const { ctx, service } = this;
     ctx.body = "OK";
   }
+
+  async like() {
+    const { ctx, service } = this;
+    const { id } = ctx.params;
+    const { decrease } = ctx.request.body;
+    try {
+      const existed = await service.blog.findOne({ where: { id } });
+      if (!existed) {
+        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        return;
+      }
+      const row = {
+        likeCount: existed.likeCount + 1,
+        dislikeCount: decrease === "true" ? existed.dislikeCount - 1 : existed.dislikeCount,
+      };
+      const updated = await service.blog.update(row, { where: { id } });
+      ctx.body = {
+        success: true,
+        message: ctx.__("SuccessSmg"),
+        data: row,
+      };
+    } catch (e) {
+      ctx.logger.error("Error while BlogController.like, update: ", e);
+      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+    }
+  }
+
+  async dislike() {
+    const { ctx, service } = this;
+    const { id } = ctx.params;
+    const { decrease } = ctx.request.body;
+    try {
+      const existed = await service.blog.findOne({ where: { id } });
+      if (!existed) {
+        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        return;
+      }
+      const row = {
+        likeCount: decrease === "true" ? existed.likeCount - 1 : existed.likeCount,
+        dislikeCount: existed.dislikeCount + 1,
+      };
+      const updated = await service.blog.update(row, { where: { id } });
+      ctx.body = {
+        success: true,
+        message: ctx.__("SuccessSmg"),
+        data: row,
+      };
+    } catch (e) {
+      ctx.logger.error("Error while BlogController.like, update: ", e);
+      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+    }
+  }
 }
 
 module.exports = BlogController;
