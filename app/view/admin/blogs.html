@@ -1,0 +1,66 @@
+{% extends "./base.html" %}
+
+<!-- Body -->
+{% block body %}
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/admin/dashboard.html">{{ __('Dashboard') }}</a></li>
+    <li class="active">{{ __('Blogs') }}</li>
+  </ol>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>{{ __('Id') }}</th>
+        <th>{{ __('Title') }}</th>
+        <th>{{ __('Author') }}</th>
+        <th>{{ __('ReadCount') }}</th>
+        <th>{{ __('LikeAndDisLikeCount') }}</th>
+        <th>{{ __('Category') }}</th>
+        <th>{{ __('Tags') }}</th>
+        <th>{{ __('Status') }}</th>
+        <th>{{ __('CreatedAt') }}</th>
+        <th>{{ __('Action') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for blog in blogs %}
+      <tr>
+        <td scope="row">{{ blog.id }}</td>
+        <td>
+          <a href="/blog/{{ blog.pathname }}.html">{{ blog.title }}</a>
+        </td>
+        <td>{{ blog.User.nickname }}</td>
+        <td>{{ blog.readCount }}</td>
+        <td>{{ blog.likeCount }}/{{ blog.dislikeCount }}</td>
+        <td>{{ blog.Category.name }}</td>
+        <td>
+          {% for tag in blog.Tags%}
+          <span class="label label-primary">{{ tag.name }}</span>
+          {% endfor %}
+        </td>
+        <td>
+          {% if blog.status === 'TOP' %}
+          <span class="label label-danger">置顶</span>
+          {% endif %}
+          <!-- -->
+          {% if blog.status === 'PUBLISHED' %}
+          <span class="label label-success">已发布</span>
+          {% endif %}
+          <!-- -->
+          {% if blog.status === 'DRAFT' %}
+          <span class="label label-default">草稿</span>
+          {% endif %}
+        </td>
+        <td>{{ blog.createdAt }}</td>
+        <td>
+          <a href="/admin/write.html?id={{ blog.id }}">{{ __('Edit') }}</a>
+          &nbsp;|&nbsp;
+          <a data-id="{{ blog.id }}" href="javascript:;" class="text-danger">{{ __('Delete') }}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

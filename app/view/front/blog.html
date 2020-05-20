@@ -1,0 +1,10 @@
+{% extends "./base.html" %}
+
+<!-- Body -->
+{% block body %}
+<div class="kis__blog">
+  <h2>{{ blog.title }}</h2>
+  <p>{{ blog.createdAt }} • {{ blog.readTime }}</p>
+  <div>{{ blog.content | safe }}</div>
+</div>
+{% endblock %}

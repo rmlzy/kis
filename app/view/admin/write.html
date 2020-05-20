@@ -1,0 +1,197 @@
+{% extends "./base.html" %}
+
+<!-- Head -->
+{% block head %}
+<script>
+  window.initialBlogId = "{{ id }}";
+  window.i18n_PleaseInputTitle = "{{ __('PleaseInputTitle') }}";
+  window.i18n_PleaseInputContent = "{{ __('PleaseInputContent') }}";
+  window.i18n_PleaseInputPathname = "{{ __('PleaseInputPathname') }}";
+  window.i18n_PleaseCheckCategory = "{{ __('PleaseCheckCategory') }}";
+  window.i18n_PleaseCheckStatus = "{{ __('PleaseCheckStatus') }}";
+</script>
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<div class="container">
+  <form id="js_writeForm" action="#">
+    <div class="form-group">
+      <input type="text" class="form-control" name="title" placeholder="{{ __('Title') }}" />
+    </div>
+    <div class="form-group">
+      <textarea class="form-control" name="content" rows="30" placeholder="{{ __('Content') }}"></textarea>
+    </div>
+    <button id="js_showModalBtn" type="button" class="btn btn-primary">
+      {{ __('Submit') }}
+    </button>
+  </form>
+
+  <div class="modal fade" id="js_writeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <form id="js_modalForm" action="#">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">{{ __('BlogInfo') }}</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="control-label">{{ __('Pathname') }}:</label>
+              <input type="text" class="form-control" name="pathname" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Category') }}:</label>
+              <div class="control-group">
+                {% for category in categories %}
+                <label class="radio-inline">
+                  <input type="radio" name="categoryId" value="{{ category.id }}" />
+                  {{ category.name }}
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Tag') }}:</label>
+              <div class="control-group">
+                {% for tag in tags %}
+                <label class="checkbox-inline">
+                  <input type="checkbox" name="tagIds[]" value="{{ tag.id }}" />
+                  {{ tag.name }}
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Status') }}:</label>
+              <div class="control-group">
+                <label class="radio-inline"><input type="radio" name="status" value="DRAFT" /> 草稿 </label>
+                <label class="radio-inline"><input type="radio" name="status" value="PUBLISHED" /> 立即发布 </label>
+                <label class="radio-inline"><input type="radio" name="status" value="TOP" /> 置顶 </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- Foot -->
+{% block foot %}
+<script>
+  $(document).ready(function () {
+    var $writeForm = $("#js_writeForm");
+    var $modalForm = $("#js_modalForm");
+    var $writeModal = $("#js_writeModal");
+
+    setInitialData();
+
+    function setInitialData() {
+      if (!window.initialBlogId) {
+        return;
+      }
+      layer.load();
+      $.ajax({
+        method: "GET",
+        url: "/api/v1/blog/" + window.initialBlogId,
+        success: function (res) {
+          layer.closeAll("loading");
+          if (!res.success) {
+            layer.msg(res.message, { icon: 5 });
+            return;
+          }
+          $writeForm.find("input[name='title']").val(res.data.title);
+          $writeForm.find("textarea[name='content']").val(res.data.content);
+          $modalForm.find("input[name='pathname']").val(res.data.pathname);
+          $modalForm.find("input:radio[name='categoryId'][value='" + res.data.categoryId + "']").prop("checked", true);
+          $.each(res.data.Tags, function (i, tag) {
+            $modalForm.find("input:checkbox[name='tagIds[]'][value='" + tag.id + "']").prop("checked", true);
+          });
+          $modalForm.find("input:radio[name='status'][value='" + res.data.status + "']").prop("checked", true);
+        },
+      });
+    }
+
+    function setPathname(title, callback) {
+      layer.load();
+      $.ajax({
+        method: "POST",
+        url: "/api/v1/getFullUrlByBlogTitle",
+        data: title,
+        success: function (res) {
+          layer.closeAll("loading");
+          if (res.success) {
+            callback(res.data);
+          }
+        },
+      });
+    }
+
+    $("#js_showModalBtn").on("click", function () {
+      var formData = $writeForm.serializeJSON();
+      if (!formData.title) {
+        layer.msg(i18n_PleaseInputTitle, { icon: 2 });
+        return;
+      }
+      if (!formData.content) {
+        layer.msg(i18n_PleaseInputContent, { icon: 2 });
+        return;
+      }
+      if (window.initialBlogId) {
+        $writeModal.modal("show");
+        return;
+      }
+      setPathname(formData.title, function (data) {
+        $modalForm.find("input[name='pathname']").val(data.pathname);
+        $writeModal.modal("show");
+      });
+    });
+
+    $modalForm.on("submit", function (evt) {
+      evt.preventDefault();
+      var writeFormData = $writeForm.serializeJSON();
+      var modalFormData = $modalForm.serializeJSON();
+      if (!modalFormData.pathname) {
+        layer.msg(i18n_PleaseInputPathname, { icon: 2 });
+        return;
+      }
+      if (!modalFormData.categoryId) {
+        layer.msg(i18n_PleaseCheckCategory, { icon: 2 });
+        return;
+      }
+      if (!modalFormData.status) {
+        layer.msg(i18n_PleaseCheckStatus, { icon: 2 });
+        return;
+      }
+      $.ajax({
+        method: window.initialBlogId ? "PUT" : "POST",
+        url: initialBlogId ? "/api/v1/blog/" + initialBlogId : "/api/v1/blog",
+        data: Object.assign(modalFormData, writeFormData),
+        success: function (res) {
+          if (res.success) {
+            layer.alert(
+              res.message,
+              {
+                closeBtn: 0,
+              },
+              function () {
+                window.location.href = "/admin/write.html?id=" + res.data;
+              }
+            );
+          } else {
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    });
+  });
+</script>
+{% endblock %}

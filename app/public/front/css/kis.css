@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+body {
+  font-size: 14px;
+  font-family: -apple-system, Helvetica, sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: Palatino, Helvetica, serif;
+}
+a {
+  text-decoration: none;
+  color: #e6be6a;
+  transition: all 0.2s;
+}
+a:hover {
+  text-decoration: underline;
+}
+@media (prefers-color-scheme: light) {
+  body {
+    background: #fff;
+    color: #1d1d1d;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #bbbbbb;
+    background: #2b2b2b;
+  }
+}
+.kis {
+  max-width: 670px;
+  margin: 0 auto;
+  padding: 40px 15px;
+}
+.kis__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+.kis__logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 30px;
+}
+.kis__side {
+  position: relative;
+  margin-bottom: 60px;
+  padding-left: 70px;
+}
+.kis__side .kis__logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.kis__main {
+  margin-bottom: 30px;
+}
+.kis__article {
+  margin-bottom: 30px;
+}

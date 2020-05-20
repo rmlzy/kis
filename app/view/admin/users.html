@@ -1,0 +1,221 @@
+{% extends "./base.html" %}
+
+<!-- Head -->
+{% block head %}
+<script>
+  window.i18n_DeleteConfirmMsg = "{{ __('DeleteConfirmMsg') }}";
+  window.i18n_Confirm = "{{ __('Confirm') }}";
+  window.i18n_Cancel = "{{ __('Cancel') }}";
+</script>
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/admin/dashboard.html">{{ __('Dashboard') }}</a></li>
+    <li class="active">{{ __('Users') }}</li>
+  </ol>
+
+  <p>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#js_createModel">
+      <i class="glyphicon glyphicon-plus"></i>
+      {{ __('Create') }}
+    </button>
+  </p>
+
+  <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{{ __('NickName') }}</th>
+        <th>{{ __('Email') }}</th>
+        <th>{{ __('Level') }}</th>
+        <th>{{ __('Status') }}</th>
+        <th>{{ __('Action') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ user.nickname }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          {% if user.level === 'ADMIN' %}
+          <span class="label label-danger">{{ __('Admin') }}</span>
+          {% endif %}
+          <!-- -->
+          {% if user.level === 'USER' %}
+          <span class="label label-default">{{ __('User') }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if user.status === 'ENABLE' %}
+          <span class="label label-success">{{ __('Enable') }}</span>
+          {% endif %}
+          <!-- -->
+          {% if user.status === 'DISABLE' %}
+          <span class="label label-default">{{ __('Disable') }}</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if user.level === 'USER' %}
+          <a
+            data-id="{{ user.id }}"
+            data-level="ADMIN"
+            class="js_levelBtn"
+            style="margin-right: 10px;"
+            href="javascript:;"
+          >
+            {{ __('SetAsAdmin') }}
+          </a>
+          {% endif %}
+          <!-- -->
+          {% if user.level === 'ADMIN' %}
+          <a
+            data-id="{{ user.id }}"
+            class="js_levelBtn"
+            data-level="USER"
+            style="margin-right: 10px;"
+            href="javascript:;"
+          >
+            {{ __('SetAsUser') }}
+          </a>
+          {% endif %}
+          <!-- -->
+          {% if user.status === 'ENABLE' %}
+          <a data-id="{{ user.id }}" data-status="DISABLE" class="js_statusBtn text-danger" href="javascript:;">
+            {{ __('Disable') }}
+          </a>
+          {% endif %}
+          <!-- -->
+          {% if user.status === 'DISABLE' %}
+          <a data-id="{{ user.id }}" data-status="ENABLE" class="js_statusBtn text-danger" href="javascript:;">
+            {{ __('Enable') }}
+          </a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="js_createModel" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <form id="js_createForm" action="#">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">{{ __('Create') }}{{ __('User') }}</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="control-label">{{ __('Avatar') }}:</label>
+              <input type="text" class="form-control" name="avatar" maxlength="100" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('NickName') }}:</label>
+              <input type="text" class="form-control" name="nickname" maxlength="20" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Email') }}:</label>
+              <input type="email" class="form-control" name="email" maxlength="100" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Password') }}:</label>
+              <input type="password" class="form-control" name="password" maxlength="30" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Level') }}:</label>
+              <div class="control-group">
+                <label class="radio-inline"><input type="radio" name="level" value="USER" checked /> 普通用户 </label>
+                <label class="radio-inline"><input type="radio" name="level" value="ADMIN" /> 管理员 </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Status') }}:</label>
+              <div class="control-group">
+                <label class="radio-inline"><input type="radio" name="status" value="ENABLE" checked /> 启用 </label>
+                <label class="radio-inline"><input type="radio" name="status" value="DISABLE" /> 停用 </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- Foot -->
+{% block foot %}
+<script>
+  $(document).ready(function () {
+    $("#js_createForm").on("submit", function (evt) {
+      evt.preventDefault();
+      var formData = $(this).serializeJSON();
+      layer.load();
+      $.ajax({
+        method: "POST",
+        url: "/api/v1/user",
+        data: formData,
+        success: function (res) {
+          layer.closeAll("loading");
+          if (res.success) {
+            $("#js_createModel").modal("hide");
+            window.location.reload();
+          } else {
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+        error: function () {},
+      });
+    });
+
+    $(".js_levelBtn").on("click", function () {
+      var id = $(this).data("id");
+      var level = $(this).data("level");
+      layer.load();
+      $.ajax({
+        method: "PUT",
+        url: "/api/v1/user/" + id + "/level",
+        data: { level: level },
+        success: function (res) {
+          layer.closeAll("loading");
+          if (res.success) {
+            window.location.reload();
+          } else {
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    });
+
+    $(".js_statusBtn").on("click", function () {
+      var id = $(this).data("id");
+      var status = $(this).data("status");
+      layer.load();
+      $.ajax({
+        method: "PUT",
+        url: "/api/v1/user/" + id + "/status",
+        data: { status: status },
+        success: function (res) {
+          layer.closeAll("loading");
+          if (res.success) {
+            window.location.reload();
+          } else {
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    });
+  });
+</script>
+{% endblock %}

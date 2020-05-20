@@ -1,0 +1,28 @@
+{% extends "./base.html" %}
+
+<!-- Body -->
+{% block body %}
+<aside class="kis__side">
+  <img class="kis__logo" src="/public/front/img/avatar.jpeg" alt="{{ title }}" />
+  <p>Person blog by <a href="{{ author.github }}" target="_blank" title="author.name">{{ author.name }}</a>.</p>
+  <p>{{ subtitle }}</p>
+</aside>
+
+<div class="kis__articles">
+  {% for blog in blogs %}
+  <article class="kis__article">
+    <h2>
+      <a href="/blog/{{ blog.pathname }}.html" title="{{ blog.title }}">{{ blog.title }}</a>
+    </h2>
+    <p>
+      {% if blog.status == 'TOP' %}
+      <span>#TOP&nbsp;•&nbsp;</span>
+      {% endif %}
+      <span>{{ blog.createdAt }}&nbsp;•&nbsp;</span>
+      <span>{{ blog.readTime }}</span>
+    </p>
+    <p>{{ blog.summary | safe }}</p>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}

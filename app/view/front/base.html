@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}" />
+    <meta name="author" content="{{ author.name }}<{{ author.email }}>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="shortcut icon" href="/public/front/img/favicon.ico" />
+    <link id="js_hljsCss" rel="stylesheet" href="/public/front/lib/highlight/styles/github.css" />
+    <link rel="stylesheet" href="/public/front/css/kis.css?v={{ version }}" />
+    <script src="/public/front/js/delete-os-theme.js?v={{ version }}"></script>
+    {% block head %}{% endblock %}
+  </head>
+
+  <body class="kis">
+    <header class="kis__header">
+      <h1>
+        <a href="/">{{ title }}</a>
+      </h1>
+    </header>
+
+    <main class="kis__main">
+      {% block body %}{% endblock %}
+    </main>
+
+    <footer>
+      <a href="mailto:{{ author.email }}" target="_blank">Email</a> •
+      <a href="{{ author.twitter }}" target="_blank">Twitter</a> •
+      <a href="{{ author.github }}" target="_blank">Github</a>
+    </footer>
+
+    <script src="/public/front/lib/highlight/highlight.pack.js"></script>
+    <script src="/public/front/js/main.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+      console.log("My blog has running {{ systemRunning }} days.");
+      console.log("Today page view: 30, total: 300k.");
+    </script>
+    {% block foot %}{% endblock %}
+  </body>
+</html>
