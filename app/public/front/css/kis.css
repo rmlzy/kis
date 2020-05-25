@@ -226,6 +226,12 @@ code {
 .kis__article {
   margin-bottom: 30px;
 }
+.kis__article .avatar {
+  display: inline-block;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
 .kis__divider {
   width: 100%;
   height: 1px;

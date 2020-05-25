@@ -18,6 +18,12 @@
       </a>
     </h2>
     <p>
+      {% if blog.User %}
+      <span>
+        <img class="avatar" src="{{ blog.User.avatar }}" alt="{{ blog.User.nickname }}" />
+        {{ blog.User.nickname }}&nbsp;•&nbsp;
+      </span>
+      {% endif %}
       <span>{{ blog.createdAt }}&nbsp;•&nbsp;</span>
       <span>{{ blog.readTime }}</span>
     </p>
