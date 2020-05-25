@@ -66,5 +66,5 @@ module.exports = {
   Slogan: "KIS 是一个轻量的多人博客平台。",
   Copyright: "© 2020 KIS",
   Author: "作者",
-  BlogBy: "",
+  Summary: "摘要",
 };

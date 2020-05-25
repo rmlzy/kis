@@ -40,7 +40,7 @@ module.exports = (app) => {
     },
 
     // 头像地址
-    avatarUrl: {
+    avatar: {
       type: STRING(500),
       defaultValue: "",
     },

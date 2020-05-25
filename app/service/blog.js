@@ -9,7 +9,7 @@ class BlogService extends Service {
       include: [
         { model: ctx.model.Category, attributes: ["id", "name"] },
         { model: ctx.model.Tag, attributes: ["id", "name"] },
-        { model: ctx.model.User, attributes: ["id", "avatarUrl", "nickname"] },
+        { model: ctx.model.User, attributes: ["id", "avatar", "nickname"] },
       ],
     });
   }
@@ -21,7 +21,7 @@ class BlogService extends Service {
       include: [
         { model: ctx.model.Category, attributes: ["id", "name"] },
         { model: ctx.model.Tag, attributes: ["id", "name"] },
-        { model: ctx.model.User, attributes: ["id", "avatarUrl", "nickname"] },
+        { model: ctx.model.User, attributes: ["id", "avatar", "nickname"] },
       ],
     });
   }

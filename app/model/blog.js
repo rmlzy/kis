@@ -43,6 +43,12 @@ module.exports = (app) => {
       defaultValue: "",
     },
 
+    // 摘要
+    summary: {
+      type: STRING(200),
+      defaultValue: "",
+    },
+
     // 内容
     content: {
       type: STRING(10000),

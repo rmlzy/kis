@@ -21,7 +21,7 @@ class BlogController extends Controller {
 
   async create() {
     const { ctx, service } = this;
-    const { title, pathname, tagIds, categoryId, content, status } = ctx.request.body;
+    const { title, pathname, summary, tagIds, categoryId, content, status } = ctx.request.body;
     const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk"));
     try {
       const existed = await service.blog.findOne({ where: { pathname } });
@@ -32,6 +32,7 @@ class BlogController extends Controller {
       const created = await service.blog.create({
         title,
         pathname,
+        summary,
         userId,
         categoryId,
         content,
@@ -49,7 +50,7 @@ class BlogController extends Controller {
   async update() {
     const { ctx, service } = this;
     const { id } = ctx.params;
-    const { title, pathname, tagIds, categoryId, content, status } = ctx.request.body;
+    const { title, pathname, summary, tagIds, categoryId, content, status } = ctx.request.body;
     try {
       const existed = await service.blog.findOne({ where: { id } });
       if (!existed) {
@@ -57,7 +58,7 @@ class BlogController extends Controller {
         return;
       }
       const tags = await service.tag.findAll({ where: { id: tagIds } });
-      await existed.update({ title, pathname, categoryId, content, status });
+      await existed.update({ title, pathname, summary, categoryId, content, status });
       await existed.setTags(tags);
       ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: id };
     } catch (e) {

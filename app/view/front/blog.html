@@ -5,7 +5,7 @@
 <div class="kis__blog">
   <h2>{{ blog.title }}</h2>
   <p>{{ blog.createdAt }} • {{ blog.readTime }} • 👀 {{ blog.readCount }}</p>
-  <div>{{ blog.content | safe }}</div>
+  <div class="markdown-body">{{ blog.content | safe }}</div>
 
   <div class="kis__divider"></div>
   <div class="kis__blog__like">
