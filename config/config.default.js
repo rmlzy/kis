@@ -13,7 +13,7 @@ module.exports = (appInfo) => {
   config.domain = "http://127.0.0.1:1025";
 
   // 静态文件版本
-  config.version = "2020-04-06";
+  config.version = "2020-05-25";
 
   // TDK
   config.title = "远子和 Poppy 的小站";
