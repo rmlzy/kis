@@ -4,7 +4,7 @@
 {% block body %}
 <div class="kis__blog">
   <h2>{{ blog.title }}</h2>
-  <p>{{ blog.createdAt }} • {{ blog.readTime }} • 👀 {{ blog.readCount }}</p>
+  <p>{{ blog.createdAt }}&nbsp;•&nbsp;{{ blog.readTime }}&nbsp;•&nbsp;👀{{ blog.readCount }} Views</p>
   <div class="markdown-body">{{ blog.content | safe }}</div>
 
   <div class="kis__divider"></div>
