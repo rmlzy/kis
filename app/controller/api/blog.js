@@ -69,7 +69,22 @@ class BlogController extends Controller {
 
   async delete() {
     const { ctx, service } = this;
-    ctx.body = "OK";
+    const { id } = ctx.params;
+    try {
+      // 只能删除自己的文章
+      const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk"));
+      const existed = await service.blog.findOne({ where: { id, userId } });
+      if (!existed) {
+        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        return;
+      }
+      const deleted = await service.blog.destroy({ where: { id } });
+      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: id };
+    } catch (e) {
+      console.log(e);
+      ctx.logger.error("Error while BlogController.delete, update: ", e);
+      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+    }
   }
 
   async like() {

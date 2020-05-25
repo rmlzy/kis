@@ -1,5 +1,14 @@
 {% extends "./base.html" %}
 
+<!-- Head -->
+{% block head %}
+<script>
+  window.i18n_DeleteConfirmMsg = "{{ __('DeleteConfirmMsg') }}";
+  window.i18n_Confirm = "{{ __('Confirm') }}";
+  window.i18n_Cancel = "{{ __('Cancel') }}";
+</script>
+{% endblock %}
+
 <!-- Body -->
 {% block body %}
 <div class="container">
@@ -56,11 +65,47 @@
         <td>
           <a href="/admin/write.html?id={{ blog.id }}">{{ __('Edit') }}</a>
           &nbsp;|&nbsp;
-          <a data-id="{{ blog.id }}" href="javascript:;" class="text-danger">{{ __('Delete') }}</a>
+          <a data-id="{{ blog.id }}" href="javascript:;" class="js_deleteBtn text-danger">{{ __('Delete') }}</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+{% endblock %}
+
+<!-- Foot -->
+{% block foot %}
+<script>
+  $(document).ready(function () {
+    $(".js_deleteBtn").on("click", function () {
+      var id = $(this).data("id");
+      if (!id) {
+        return;
+      }
+      layer.confirm(
+        i18n_DeleteConfirmMsg,
+        {
+          btn: [i18n_Confirm, i18n_Cancel],
+        },
+        function () {
+          layer.load();
+          $.ajax({
+            method: "DELETE",
+            url: "/api/v1/blog/" + id,
+            success: function (res) {
+              layer.closeAll("loading");
+              if (res.success) {
+                window.location.reload();
+              } else {
+                layer.msg(res.message, { icon: 5 });
+              }
+            },
+          });
+        },
+        function () {}
+      );
+    });
+  });
+</script>
 {% endblock %}
