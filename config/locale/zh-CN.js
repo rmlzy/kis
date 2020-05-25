@@ -67,4 +67,10 @@ module.exports = {
   Copyright: "© 2020 KIS",
   Author: "作者",
   Summary: "摘要",
+  Visitors: "访问记录",
+  Url: "路径",
+  IP: "IP",
+  VisitTime: "访问时间",
+  Browser: "浏览器",
+  OS: "系统",
 };

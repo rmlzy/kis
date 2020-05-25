@@ -94,6 +94,20 @@ class AdminController extends Controller {
       tags,
     });
   }
+
+  async renderVisitors() {
+    const { ctx, service } = this;
+    let visitors = [];
+    try {
+      visitors = await service.visitor.findAll();
+    } catch (e) {
+      // ignore
+    }
+    await ctx.render("admin/visitors.html", {
+      currentNav: "visitor",
+      visitors,
+    });
+  }
 }
 
 module.exports = AdminController;

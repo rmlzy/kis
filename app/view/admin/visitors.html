@@ -1,0 +1,44 @@
+{% extends "./base.html" %}
+
+<!-- Body -->
+{% block body %}
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="/admin/dashboard.html">{{ __('Dashboard') }}</a></li>
+    <li class="active">{{ __('Visitors') }}</li>
+  </ol>
+
+  <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>{{ __('Url') }}</th>
+        <th>{{ __('IP') }}</th>
+        <th>{{ __('Browser') }}</th>
+        <th>{{ __('OS') }}</th>
+        <th>{{ __('VisitTime') }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for visitor in visitors %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ visitor.url }}</td>
+        <td>{{ visitor.ip }}</td>
+        <td>
+          {% if visitor.browser %}
+          <div>{{ visitor.browser.name }}({{ visitor.browser.version }})</div>
+          {% endif %}
+        </td>
+        <td>
+          {% if visitor.os %}
+          <div>{{ visitor.os.name }}({{ visitor.os.version }})</div>
+          {% endif %}
+        </td>
+        <td>{{ visitor.createdAt }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

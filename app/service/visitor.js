@@ -1,10 +1,18 @@
 const Service = require("egg").Service;
 const ip = require("ip");
+const parser = require("ua-parser-js");
 
 class VisitorService extends Service {
   async findAll(condition) {
     const { ctx } = this;
-    return ctx.model.Visitor.findAll(condition);
+    const rows = await ctx.model.Visitor.findAll(condition);
+    return rows
+      .map((el) => el.get({ plain: true }))
+      .map((row) => {
+        const ua = parser(row.ua);
+        row = { ...row, ...ua };
+        return row;
+      });
   }
 
   async create() {
@@ -12,7 +20,7 @@ class VisitorService extends Service {
     const ua = ctx.headers["user-agent"];
     const userIp = ip.address();
     const url = ctx.request.url;
-    const existed = await ctx.model.Visitor.findOne({ ip: userIp });
+    const existed = await ctx.model.Visitor.findOne({ where: { ip: userIp } });
     if (existed) {
       return;
     }

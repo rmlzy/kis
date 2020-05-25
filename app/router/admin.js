@@ -14,4 +14,5 @@ module.exports = (app) => {
   router.get("/admin/users.html", logged(), controller.view.admin.renderUsers);
   router.get("/admin/categories.html", logged(), controller.view.admin.renderCategories);
   router.get("/admin/write.html", logged(), controller.view.admin.renderWrite);
+  router.get("/admin/visitors.html", logged(), controller.view.admin.renderVisitors);
 };
