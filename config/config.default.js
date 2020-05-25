@@ -7,7 +7,7 @@ module.exports = (appInfo) => {
   const config = (exports = {});
 
   // Egg Key
-  config.keys = "RMLZY";
+  config.keys = "POPPYTHON";
 
   // 你的域名
   config.domain = "http://127.0.0.1:1025";
@@ -16,12 +16,12 @@ module.exports = (appInfo) => {
   config.version = "2020-04-06";
 
   // TDK
-  config.title = "Yuan's Develop Field";
+  config.title = "远子和 Poppy 的小站";
   config.subtitle =
-    "<p><a href='https://github.com/rmlzy' target='_blank'>远子</a>的开发试验田</p>" +
-    "<p>记录一些编程日志 & 尝试新奇的编程技术</p>";
-  config.description = "远子的开发试验田, 记录一些编程日志, 尝试新奇的编程技术";
-  config.keywords = "rmlzy, 远子, 前端开发, 技术博客";
+    "<p><a href='https://github.com/rmlzy' target='_blank'>远子</a>: 前端开发工程师</p>" +
+    "<p>Poppy: 旅游行业产品经理</p>";
+  config.description = "远子和 Poppy 的小站, 记录一下关于开发、设计的文章";
+  config.keywords = "poppy, rmlzy, 远子, 产品设计, 前端开发, 技术博客";
   config.author = {
     name: "Jason Liu",
     email: "rmlzy@outlook.com",
