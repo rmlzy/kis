@@ -44,6 +44,12 @@ class CommonController extends Controller {
     }
   }
 
+  /**
+   * 文件上传
+   * @returns {Promise<void>}
+   */
+  async upload() {}
+
   async login() {
     const { ctx, service, config } = this;
     const { code, email, password, captcha } = ctx.request.body;

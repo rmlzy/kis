@@ -106,6 +106,12 @@
       height: "calc(100vh - 210px)",
       initialValue: "",
       hideModeSwitch: true,
+      hooks: {
+        addImageBlobHook: function (fileOrBlob, callback, source) {
+          callback("111", "222");
+          return false;
+        },
+      },
     });
 
     setInitialData();
