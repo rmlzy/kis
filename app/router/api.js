@@ -11,6 +11,7 @@ module.exports = (app) => {
   router.post("/api/v1/getFullUrlByBlogTitle", controller.api.common.getFullUrlByBlogTitle);
   router.get("/api/v1/captcha", controller.api.common.generateImageCaptcha);
   router.post("/api/v1/login", controller.api.common.login);
+  router.post("/api/v1/upload", controller.api.common.upload);
 
   // User
   router.get("/api/v1/user/:id", logged(), controller.api.user.detail);

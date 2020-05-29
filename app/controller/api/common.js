@@ -45,10 +45,46 @@ class CommonController extends Controller {
   }
 
   /**
-   * 文件上传
-   * @returns {Promise<void>}
+   * 阿里云OSS上传
    */
-  async upload() {}
+  async upload() {
+    const { ctx } = this;
+    const { getFileExt } = ctx.helper;
+    const { files } = ctx.request;
+    if (!files || files.length === 0) {
+      ctx.body = { success: false, message: "未检测到附件, 请重试" };
+      return;
+    }
+    if (files.length > 1) {
+      ctx.body = { success: false, message: "仅允许单个文件上传, 请重试" };
+      return;
+    }
+
+    const file = files[0];
+    const uuid = uuidv1();
+    const ext = getFileExt(file.filename);
+    const name = `${uuid}__${file.filename}`;
+    try {
+      const res = await ctx.oss.put(`pdf_report/${name}`, file.filepath, {
+        headers: {
+          "Content-Type": "application/octet-stream", // 文件被打开时会自动下载
+        },
+      });
+      ctx.body = {
+        success: true,
+        message: "操作成功",
+        data: { uuid, name: file.filename, ext, url: res.url },
+      };
+    } catch (e) {
+      ctx.logger.error("ERROR while common/uploadOss : ", e);
+      ctx.body = { success: false, message: "文件上传失败, 请重试" };
+      ctx.runInBackground(async () => {
+        await ctx.service.common.notifyAuthor(e);
+      });
+    } finally {
+      await fs.unlink(file.filepath);
+    }
+  }
 
   async login() {
     const { ctx, service, config } = this;

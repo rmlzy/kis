@@ -10,6 +10,11 @@ exports.jwt = {
   package: "egg-jwt",
 };
 
+exports.oss = {
+  enable: true,
+  package: "egg-oss",
+};
+
 exports.validate = {
   enable: true,
   package: "egg-validate",
@@ -18,9 +23,4 @@ exports.validate = {
 exports.sequelize = {
   enable: true,
   package: "egg-sequelize",
-};
-
-exports.i18n = {
-  enable: true,
-  package: "egg-i18n",
 };
