@@ -2,8 +2,8 @@
 
 <!-- Head -->
 {% block head %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link rel="stylesheet" href="/public/admin/lib/toastui-editor/codemirror.min.css" />
+<link rel="stylesheet" href="/public/admin/lib/toastui-editor/toastui-editor.min.css" />
 <script>
   window.initialBlogId = "{{ id }}";
 </script>
@@ -94,7 +94,7 @@
 
 <!-- Foot -->
 {% block foot %}
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="/public/admin/lib/toastui-editor/toastui-editor-all.min.js"></script>
 <script>
   $(document).ready(function () {
     var $writeForm = $("#js_writeForm");
