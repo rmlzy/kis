@@ -27,7 +27,7 @@
         return;
       }
       $.ajax({
-        method: "PUT",
+        type: "PUT",
         url: "/api/v1/blog/{{ blog.id }}/like",
         data: {
           decrease: $dislikeBtn.hasClass("active"),
@@ -46,7 +46,7 @@
         return;
       }
       $.ajax({
-        method: "PUT",
+        type: "PUT",
         url: "/api/v1/blog/{{ blog.id }}/dislike",
         data: {
           decrease: $likeBtn.hasClass("active"),

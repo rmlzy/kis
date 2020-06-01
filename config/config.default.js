@@ -67,6 +67,13 @@ module.exports = (appInfo) => {
     csrf: false,
   };
 
+  // 文件上传
+  config.multipart = {
+    mode: "file",
+    fileExtensions: [".pdf", ".png", ".jpg", ".jpeg"],
+    fileSize: "5mb",
+  };
+
   // 国际化
   exports.i18n = {
     // 默认语言，默认 "en_US"

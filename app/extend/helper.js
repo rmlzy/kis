@@ -37,6 +37,11 @@ module.exports = {
     return md5(md5(password));
   },
 
+  getFileExt(filename) {
+    const ext = filename.split(".").pop();
+    return ext || "";
+  },
+
   getLoggedIdByToken(token) {
     let id;
     try {

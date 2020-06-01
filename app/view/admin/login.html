@@ -3,7 +3,7 @@
 <!-- Body -->
 {% block body %}
 <div id="js_loginPage" class="login-page">
-  <form class="login__form" action="/api/v1/login" method="post">
+  <form id="js_loginForm" class="login__form" action="#">
     <h2 class="login__form__title">{{ __('Login') }}</h2>
     <p class="login__form__desc">{{ __('Slogan') }}</p>
     <input type="hidden" name="code" value="{{ code }}" />
@@ -69,8 +69,9 @@
 
     function setCaptcha() {
       $.ajax({
-        method: "GET",
+        type: "GET",
         url: "/api/v1/captcha",
+        dataType: "json",
         success: function (res) {
           if (res.success) {
             $("#js_captcha").html(res.data);
@@ -80,6 +81,26 @@
         },
       });
     }
+
+    $("#js_loginForm").on("submit", function (evt) {
+      evt.preventDefault();
+      var formData = $(this).serializeJSON();
+      layer.load();
+      $.ajax({
+        type: "POST",
+        url: "/api/v1/login",
+        data: formData,
+        success: function (res) {
+          layer.closeAll("loading");
+          if (res.success) {
+            window.location.href = "/admin/dashboard.html";
+          } else {
+            setCaptcha();
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    });
   });
 </script>
 {% endblock %}

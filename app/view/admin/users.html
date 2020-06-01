@@ -163,7 +163,7 @@
       var formData = $(this).serializeJSON();
       layer.load();
       $.ajax({
-        method: "POST",
+        type: "POST",
         url: "/api/v1/user",
         data: formData,
         success: function (res) {
@@ -184,7 +184,7 @@
       var level = $(this).data("level");
       layer.load();
       $.ajax({
-        method: "PUT",
+        type: "PUT",
         url: "/api/v1/user/" + id + "/level",
         data: { level: level },
         success: function (res) {
@@ -203,7 +203,7 @@
       var status = $(this).data("status");
       layer.load();
       $.ajax({
-        method: "PUT",
+        type: "PUT",
         url: "/api/v1/user/" + id + "/status",
         data: { status: status },
         success: function (res) {

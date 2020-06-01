@@ -91,7 +91,7 @@
         function () {
           layer.load();
           $.ajax({
-            method: "DELETE",
+            type: "DELETE",
             url: "/api/v1/blog/" + id,
             success: function (res) {
               layer.closeAll("loading");

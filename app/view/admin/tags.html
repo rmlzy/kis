@@ -139,7 +139,7 @@
       var formData = $(this).serializeJSON();
       layer.load();
       $.ajax({
-        method: "POST",
+        type: "POST",
         url: "/api/v1/tag",
         data: formData,
         success: function (res) {
@@ -160,7 +160,7 @@
       var formData = $(this).serializeJSON();
       layer.load();
       $.ajax({
-        method: "PUT",
+        type: "PUT",
         url: "/api/v1/tag/" + formData.id,
         data: formData,
         success: function (res) {
@@ -181,7 +181,7 @@
       var $form = $("#js_updateForm");
       layer.load();
       $.ajax({
-        method: "GET",
+        type: "GET",
         url: "/api/v1/tag/" + id,
         success: function (res) {
           layer.closeAll("loading");
@@ -207,7 +207,7 @@
         },
         function () {
           $.ajax({
-            method: "DELETE",
+            type: "DELETE",
             url: "/api/v1/tag/" + id,
             success: function (res) {
               layer.closeAll("loading");

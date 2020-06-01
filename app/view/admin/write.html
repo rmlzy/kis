@@ -108,7 +108,27 @@
       hideModeSwitch: true,
       hooks: {
         addImageBlobHook: function (fileOrBlob, callback, source) {
-          callback("111", "222");
+          var fd = new FormData();
+          fd.append("file", fileOrBlob);
+          layer.load();
+          $.ajax({
+            type: "POST",
+            url: "/api/v1/upload",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+              layer.closeAll("loading");
+              if (res.success) {
+                callback(res.data.url, res.data.name);
+              } else {
+                layer.msg(res.message, { icon: 5 });
+              }
+            },
+            error: function (jqXHR, textStatus, errorMessage) {
+              console.log(errorMessage); // Optional
+            },
+          });
           return false;
         },
       },
@@ -159,7 +179,7 @@
       }
       writeFormData.content = editor.getMarkdown();
       $.ajax({
-        method: window.initialBlogId ? "PUT" : "POST",
+        type: window.initialBlogId ? "PUT" : "POST",
         url: initialBlogId ? "/api/v1/blog/" + initialBlogId : "/api/v1/blog",
         data: Object.assign(modalFormData, writeFormData),
         success: function (res) {
@@ -186,7 +206,7 @@
       }
       layer.load();
       $.ajax({
-        method: "GET",
+        type: "GET",
         url: "/api/v1/blog/" + window.initialBlogId,
         success: function (res) {
           layer.closeAll("loading");
@@ -210,7 +230,7 @@
     function setPathname(title, callback) {
       layer.load();
       $.ajax({
-        method: "POST",
+        type: "POST",
         url: "/api/v1/getFullUrlByBlogTitle",
         data: title,
         success: function (res) {

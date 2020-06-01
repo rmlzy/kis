@@ -2,6 +2,7 @@
 
 const Controller = require("egg").Controller;
 const { v4: uuidv4 } = require("uuid");
+const fs = require("fs-extra");
 const svgCaptcha = require("svg-captcha");
 
 class CommonController extends Controller {
@@ -51,6 +52,8 @@ class CommonController extends Controller {
     const { ctx } = this;
     const { getFileExt } = ctx.helper;
     const { files } = ctx.request;
+    console.log(ctx.request.body);
+    console.log(ctx.request.files);
     if (!files || files.length === 0) {
       ctx.body = { success: false, message: "未检测到附件, 请重试" };
       return;
@@ -61,18 +64,14 @@ class CommonController extends Controller {
     }
 
     const file = files[0];
-    const uuid = uuidv1();
+    const uuid = uuidv4();
     const ext = getFileExt(file.filename);
     const name = `${uuid}__${file.filename}`;
     try {
-      const res = await ctx.oss.put(`pdf_report/${name}`, file.filepath, {
-        headers: {
-          "Content-Type": "application/octet-stream", // 文件被打开时会自动下载
-        },
-      });
+      const res = await ctx.oss.put(`pdf_report/${name}`, file.filepath);
       ctx.body = {
         success: true,
-        message: "操作成功",
+        message: ctx.__("SuccessSmg"),
         data: { uuid, name: file.filename, ext, url: res.url },
       };
     } catch (e) {
@@ -105,7 +104,7 @@ class CommonController extends Controller {
       }
       const token = await service.user.generateToken(email, password);
       ctx.cookies.set("tk", token);
-      ctx.redirect("/admin/dashboard.html");
+      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
     } catch (e) {
       ctx.logger.error("Error while CommonController.login, stack: ", e);
       ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
