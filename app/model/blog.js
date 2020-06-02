@@ -82,7 +82,7 @@ module.exports = (app) => {
     // 状态: 草稿、已发布、置顶
     status: {
       type: STRING(10),
-      values: ["DRAFT", "PUBLISHED", "TOP"],
+      values: ["DRAFT", "PUBLISHED", "TOP", "HIDE"],
       defaultValue: "DRAFT",
     },
 

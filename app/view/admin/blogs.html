@@ -60,6 +60,10 @@
           {% if blog.status === 'DRAFT' %}
           <span class="label label-default">草稿</span>
           {% endif %}
+          <!-- -->
+          {% if blog.status === 'HIDE' %}
+          <span class="label label-warning">隐藏</span>
+          {% endif %}
         </td>
         <td>{{ blog.createdAt }}</td>
         <td>
