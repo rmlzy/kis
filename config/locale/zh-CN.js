@@ -63,7 +63,7 @@ module.exports = {
   SetAsAdmin: "设为管理员",
   SetAsUser: "设为用户",
   Login: "登录",
-  Slogan: "KIS 是一个轻量的多人博客平台。",
+  Slogan: "远子和 Poppy 的小站",
   Copyright: "© 2020 KIS",
   Author: "作者",
   Summary: "摘要",

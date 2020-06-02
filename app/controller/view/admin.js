@@ -12,10 +12,19 @@ class AdminController extends Controller {
   }
 
   async renderDashboard() {
-    const { ctx } = this;
-    await ctx.render("admin/dashboard.html", {
+    const { ctx, service } = this;
+    const entity = {
       currentNav: "dashboard",
-    });
+      toh: [],
+      blog: null,
+    };
+    const tohRes = await service.third.todayOfHistory();
+    if (tohRes.success) {
+      entity.toh = tohRes.data;
+    }
+    entity.blog = await service.blog.count();
+    console.log(entity);
+    await ctx.render("admin/dashboard.html", entity);
   }
 
   async renderBlogs() {
