@@ -6,59 +6,5 @@
   <h2>{{ blog.title }}</h2>
   <p>{{ blog.createdAt }}&nbsp;•&nbsp;{{ blog.readTime }}&nbsp;•&nbsp;👀 {{ blog.readCount }} Views</p>
   <div class="markdown-body">{{ blog.content | safe }}</div>
-
-  <div class="kis__divider"></div>
-  <div class="kis__blog__like">
-    <span>这篇文章对你有帮助吗?</span>
-    <a href="javascript:;" id="js_likeBtn">👍🏻 ({{ blog.likeCount }})</a>
-    <a href="javascript:;" id="js_dislikeBtn">👎🏻 ({{ blog.dislikeCount }})</a>
-  </div>
 </div>
-{% endblock %}
-
-<!-- Foot -->
-{% block foot %}
-<script>
-  $(document).ready(function () {
-    var $likeBtn = $("#js_likeBtn");
-    var $dislikeBtn = $("#js_dislikeBtn");
-    $likeBtn.on("click", function () {
-      if ($likeBtn.hasClass("active")) {
-        return;
-      }
-      $.ajax({
-        type: "PUT",
-        url: "/api/v1/blog/{{ blog.id }}/like",
-        data: {
-          decrease: $dislikeBtn.hasClass("active"),
-        },
-        success: function (res) {
-          if (res.success) {
-            $likeBtn.html("👍(" + res.data.likeCount + ")").addClass("active");
-            $dislikeBtn.html("👎🏻(" + res.data.dislikeCount + ")").removeClass("active");
-          }
-        },
-      });
-    });
-
-    $dislikeBtn.on("click", function () {
-      if ($dislikeBtn.hasClass("active")) {
-        return;
-      }
-      $.ajax({
-        type: "PUT",
-        url: "/api/v1/blog/{{ blog.id }}/dislike",
-        data: {
-          decrease: $likeBtn.hasClass("active"),
-        },
-        success: function (res) {
-          if (res.success) {
-            $likeBtn.html("👍🏻(" + res.data.likeCount + ")").removeClass("active");
-            $dislikeBtn.html("👎(" + res.data.dislikeCount + ")").addClass("active");
-          }
-        },
-      });
-    });
-  });
-</script>
 {% endblock %}
