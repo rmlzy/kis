@@ -3,14 +3,6 @@
 <!-- Body -->
 {% block body %}
 <div class="container">
-  <div class="jumbotron">
-    <h1>Hello, world!</h1>
-    <p>
-      This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
-      information.
-    </p>
-  </div>
-
   {% if blog %}
   <div class="row">
     <div class="col-sm-4">
@@ -25,33 +17,24 @@
         </div>
       </div>
     </div>
-  </div>
-  {% endif %}
-
-  <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-4">
       <div class="panel panel-default">
-        <div class="panel-heading">历史上的今天</div>
+        <div class="panel-heading">评论分析</div>
         <div class="panel-body">
-          {% for item in toh %}
-          <div class="media">
-            <div class="media-body">
-              <h4 class="media-heading">{{ loop.index }}.&nbsp;{{ item.title }}</h4>
-              <p class="text-success">
-                <span>{{ item.year }}年{{ item.month }}月{{ item.day }}日</span>
-                <span>&nbsp;•&nbsp;</span>
-                <span>{{ item.lunar }}</span>
-              </p>
-              <p>{{ item.des }}</p>
-            </div>
-            {% if item.pic %}
-            <div class="media-left"><img class="media-object" src="{{ item.pic }}" style="height: 64px;" /></div>
-            {% endif %}
-          </div>
-          {% endfor %}
+          <p><b>总评论数</b>：0</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">访问分析</div>
+        <div class="panel-body">
+          <p><b>今日访问数</b>：0</p>
+          <p><b>总访问数</b>：0</p>
         </div>
       </div>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endblock %}
