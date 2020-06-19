@@ -26,9 +26,9 @@ module.exports = {
   calcReadTime(wordCount) {
     let readTime = "";
     const minutes = Math.ceil(wordCount / 1000);
-    for (let i = 0; i < minutes; i++) {
-      readTime += "☕️";
-    }
+    // for (let i = 0; i < minutes; i++) {
+    //   readTime += "☕️";
+    // }
     readTime += ` ${minutes} min read`;
     return readTime;
   },

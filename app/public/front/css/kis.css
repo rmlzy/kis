@@ -191,7 +191,7 @@ code {
   margin: 0 auto;
   padding: 40px 15px;
 }
-.kis__header {
+.kis__hd {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -220,8 +220,13 @@ code {
   top: 0;
   left: 0;
 }
-.kis__main {
+.kis__bd {
   margin-bottom: 50px;
+}
+.kis__ft {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .kis__article {
   margin-bottom: 30px;

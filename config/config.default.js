@@ -28,6 +28,7 @@ module.exports = (appInfo) => {
     github: "https://github.com/rmlzy",
     twitter: "https://twitter.com/rmlzy",
   };
+  config.copyright = "© 2020, poppython.com";
 
   // 第一次部署的时间
   config.firstDeployDate = "2020-02-18 17:42:45";

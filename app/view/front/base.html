@@ -14,18 +14,23 @@
   </head>
 
   <body class="kis">
-    <header class="kis__header">
+    <header class="kis__hd">
       <h1>
         <a href="/">{{ title }}</a>
       </h1>
     </header>
 
-    <main class="kis__main">
+    <main class="kis__bd">
       {% block body %}{% endblock %}
     </main>
 
-    <footer>
-      <a href="{{ author.github }}" target="_blank">Github</a>
+    <footer class="kis__ft">
+      <div>{{ copyright }}</div>
+      <div>
+        <a href="mailto:{{ author.email }}" target="_blank">Email</a>&nbsp;•&nbsp;
+        <a href="{{ author.github }}" target="_blank">Github</a>&nbsp;•&nbsp;
+        <a href="{{ author.twitter }}" target="_blank">Twitter</a>
+      </div>
     </footer>
 
     <script src="/public/front/lib/highlight/highlight.pack.js"></script>

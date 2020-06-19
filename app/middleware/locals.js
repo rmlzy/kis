@@ -11,6 +11,7 @@ module.exports = () => {
     ctx.locals.subtitle = ctx.app.config.subtitle;
     ctx.locals.description = ctx.app.config.description;
     ctx.locals.author = ctx.app.config.author;
+    ctx.locals.copyright = ctx.app.config.copyright;
 
     const deployedDate = dayjs(ctx.app.config.firstDeployDate);
     ctx.locals.systemRunning = today.diff(deployedDate, "day");
