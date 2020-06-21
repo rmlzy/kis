@@ -16,10 +16,12 @@ module.exports = (appInfo) => {
   config.version = "2020-05-25";
 
   // TDK
-  config.title = "远子和 Poppy 的小站";
+  config.rmlzy = "远子";
+  config.poppy = "Poppy";
   config.subtitle =
     "<p><a href='/blog/about-rmlzy.html'>远子</a>: 一只程序猿</p>" +
-    "<p><a href='/blog/about-poppy.html'>Poppy</a>: 一只产品汪</p>";
+    "<p><a href='/blog/about-poppy.html'>Poppy</a>: 一只产品汪</p>" +
+    "<p>我们有一个可爱的宝宝~</p>";
   config.description = "远子和 Poppy 的小站, 记录一下关于开发、设计的文章";
   config.keywords = "poppy, rmlzy, 远子, 产品设计, 前端开发, 技术博客";
   config.author = {

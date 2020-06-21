@@ -2,11 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <title>{{ rmlzy }} 💖 {{ poppy }}</title>
     <meta name="description" content="{{ description }}" />
     <meta name="author" content="{{ author.name }}<{{ author.email }}>" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <link rel="shortcut icon" href="/public/front/img/favicon.ico" />
+    <meta property="og:title" content="{{ rmlzy }} 💖 {{ poppy }}" />
+    <meta property="og:type" content="{{ description }}" />
+    <meta property="og:url" content="http://poppython.com" />
+    <meta property="og:image" content="/public/front/img/logo.png?v={{ version }}" />
+    <link rel="apple-touch-icon" href="/public/front/img/logo.png?v={{ version }}" />
+    <link rel="shortcut icon" href="/public/front/img/favicon.ico?v={{ version }}" />
     <link id="js_hljsCss" rel="stylesheet" href="/public/front/lib/highlight/styles/github.css" />
     <link rel="stylesheet" href="/public/front/css/kis.css?v={{ version }}" />
     <script src="/public/front/js/theme.js?v={{ version }}"></script>
@@ -16,7 +21,11 @@
   <body class="kis">
     <header class="kis__hd">
       <h1>
-        <a href="/">{{ title }}</a>
+        <a href="/">
+          <span>{{ rmlzy }}</span>
+          <span class="heart">💖</span>
+          <span>{{ poppy }}</span>
+        </a>
       </h1>
     </header>
 

@@ -38,7 +38,7 @@ code {
 
 @media (prefers-color-scheme: light) {
   body {
-    background: #fff;
+    background: #f0f0f0 url("/public/front/img/light-bg.png");
     color: #292525;
   }
 
@@ -72,7 +72,7 @@ code {
 @media (prefers-color-scheme: dark) {
   body {
     color: #bebebe;
-    background: #242424;
+    background: #242424 url("/public/front/img/dark-bg.png");
   }
 
   a {
@@ -112,19 +112,27 @@ code {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
+
+    a {
+      text-decoration: none;
+    }
+
+    .heart {
+      display: inline-block;
+      animation: beatForPoppy 1.2s infinite;
+    }
   }
 
   &__logo {
-    width: 65px;
-    height: 65px;
+    width: 85px;
+    height: 85px;
     border-radius: 50%;
   }
 
   &__side {
     position: relative;
-    height: 60px;
     margin-bottom: 60px;
-    padding-left: 80px;
+    padding-left: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -175,5 +183,26 @@ code {
         color: inherit;
       }
     }
+  }
+}
+
+@keyframes beatForPoppy {
+  0% {
+    transform: scale(0.8);
+  }
+  5% {
+    transform: scale(0.9);
+  }
+  10% {
+    transform: scale(0.8);
+  }
+  15% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(0.8);
   }
 }
