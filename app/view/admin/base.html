@@ -2,19 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{{ title }} - Dashboard</title>
+    <title>KIS {{ __('Dashboard') }}</title>
     <meta name="description" content="{{ description }}" />
     <meta name="author" content="{{ author.name }}<{{ author.email }}>" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="shortcut icon" href="/public/front/img/favicon.ico" />
-    <link rel="stylesheet" href="/public/admin/lib/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/public/admin/lib/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="/public/admin/lib/bootstrap/css/theme.min.css" />
     <link rel="stylesheet" href="/public/admin/css/kis-admin.css?v={{ version }}" />
     {% block head %}{% endblock %}
   </head>
 
   <body>
-    <header class="navbar navbar-inverse navbar-static-top">
+    <header class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <button class="collapsed navbar-toggle" data-target="#kis-navbar" data-toggle="collapse" type="button">
