@@ -129,6 +129,7 @@ a:hover {
   text-decoration: underline;
 }
 code {
+  font-size: 0.9em;
   padding: 2px 5px;
   border-radius: 2px;
 }
@@ -152,7 +153,7 @@ code {
   code,
   kbd,
   samp {
-    color: #333;
+    color: #d71a1b;
     background: #f8f8f8;
   }
   .kis__divider {
@@ -179,7 +180,7 @@ code {
   code,
   kbd,
   samp {
-    color: #bababa;
+    color: #e6be6a;
     background: #2b2b2b;
   }
   .kis__divider {
