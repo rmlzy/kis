@@ -224,7 +224,6 @@
             $modalForm.find("input:checkbox[name='tagIds[]'][value='" + tag.id + "']").prop("checked", true);
           });
           $modalForm.find("input:radio[name='status'][value='" + res.data.status + "']").prop("checked", true);
-          setInterval(autoSave, 10000);
         },
       });
     }
