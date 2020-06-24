@@ -64,6 +64,7 @@ class FrontViewController extends Controller {
     });
     await ctx.render("front/blog.html", {
       currentNav: "home",
+      title: blog.title,
       blog,
     });
   }
