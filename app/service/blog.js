@@ -7,7 +7,7 @@ class BlogService extends Service {
     return ctx.model.Blog.findAll({
       ...condition,
       include: [
-        { model: ctx.model.Category, attributes: ["id", "name"] },
+        { model: ctx.model.Category, attributes: ["id", "name", "pathname"] },
         { model: ctx.model.Tag, attributes: ["id", "name"] },
         { model: ctx.model.User, attributes: ["id", "avatar", "nickname"] },
       ],
@@ -19,7 +19,7 @@ class BlogService extends Service {
     return ctx.model.Blog.findOne({
       ...condition,
       include: [
-        { model: ctx.model.Category, attributes: ["id", "name"] },
+        { model: ctx.model.Category, attributes: ["id", "name", "pathname"] },
         { model: ctx.model.Tag, attributes: ["id", "name"] },
         { model: ctx.model.User, attributes: ["id", "avatar", "nickname"] },
       ],

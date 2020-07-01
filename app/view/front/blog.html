@@ -10,6 +10,35 @@
 <div class="kis__blog">
   <h2>{{ blog.title }}</h2>
   <p>{{ blog.createdAt }}&nbsp;•&nbsp;{{ blog.readTime }}&nbsp;•&nbsp;👀 {{ blog.readCount }} Views</p>
+
+  {% if blog.limited %}
+  <div class="markdown-body">
+    <div class="only-for-tian">
+      <img width="200" src="/public/front/img/with-tian.jpeg" alt="" />
+      <p>抱歉，此文章只对石头开放。</p>
+    </div>
+  </div>
+  {% else %}
   <div class="markdown-body">{{ blog.content | safe }}</div>
+  {% endif %}
 </div>
 {% endblock %}
+
+<!-- Foot -->
+{% block foot %}
+<script src="/public/admin/lib/jquery/jquery-3.5.1.min.js"></script>
+{% if blog.limited %}
+<script>
+  var secret = window.prompt("抱歉，此文章只对石头开放");
+  $.ajax({
+    type: "POST",
+    url: "/api/v1/check-tian-secret",
+    data: { secret: secret },
+    success: function (res) {
+      if (res.success) {
+        window.location.href = window.location.origin + window.location.pathname + "?secret=" + res.data;
+      }
+    },
+  });
+</script>
+{% endif %} {% endblock %}

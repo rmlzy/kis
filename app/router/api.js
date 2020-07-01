@@ -12,6 +12,7 @@ module.exports = (app) => {
   router.get("/api/v1/captcha", controller.api.common.generateImageCaptcha);
   router.post("/api/v1/login", controller.api.common.login);
   router.post("/api/v1/upload", controller.api.common.upload);
+  router.post("/api/v1/check-tian-secret", controller.api.blog.checkTianSecret);
 
   // User
   router.get("/api/v1/user/:id", logged(), controller.api.user.detail);

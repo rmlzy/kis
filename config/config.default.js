@@ -33,6 +33,9 @@ module.exports = (appInfo) => {
   };
   config.copyright = "© 2020, poppython.com";
 
+  // 石头的秘钥
+  config.tianSecret = "天逸小帅哥";
+
   // 第一次部署的时间
   config.firstDeployDate = "2020-02-18 17:42:45";
 

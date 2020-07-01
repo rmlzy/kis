@@ -1,6 +1,7 @@
 "use strict";
 
 const Controller = require("egg").Controller;
+const md5 = require("blueimp-md5");
 
 class BlogController extends Controller {
   async detail() {
@@ -137,6 +138,21 @@ class BlogController extends Controller {
       ctx.logger.error("Error while BlogController.like, update: ", e);
       ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
     }
+  }
+
+  async checkTianSecret() {
+    const { ctx, config } = this;
+    const { secret } = ctx.request.body;
+    if (!secret) {
+      ctx.body = { success: false, message: "抱歉, 您没有权限" };
+      return;
+    }
+    const rightMd5 = md5(config.tianSecret);
+    if (md5(secret) !== rightMd5) {
+      ctx.body = { success: false, message: "抱歉, 您没有权限" };
+      return;
+    }
+    ctx.body = { success: true, message: "OK", data: rightMd5 };
   }
 }
 

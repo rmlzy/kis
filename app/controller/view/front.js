@@ -2,6 +2,7 @@
 
 const Controller = require("egg").Controller;
 const dayjs = require("dayjs");
+const md5 = require("blueimp-md5");
 
 class FrontViewController extends Controller {
   async render404() {
@@ -41,7 +42,8 @@ class FrontViewController extends Controller {
   }
 
   async renderBlog() {
-    const { ctx, service } = this;
+    const { ctx, service, config } = this;
+    const { secret } = ctx.request.query;
     const { pathname } = ctx.params;
     let blog = {};
     try {
@@ -55,6 +57,15 @@ class FrontViewController extends Controller {
       blog.readTime = ctx.helper.calcReadTime(blog.content.length);
       if (blog.type === "MARKDOWN") {
         blog.content = ctx.helper.md2html(blog.content);
+      }
+
+      // Limit for Tian
+      const isRightSecret = md5(config.tianSecret) === secret;
+      if (blog.Category && blog.Category.pathname === "letter-to-Tian") {
+        blog.limited = true;
+      }
+      if (isRightSecret) {
+        blog.limited = false;
       }
     } catch (e) {
       // ignore
