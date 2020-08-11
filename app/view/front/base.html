@@ -48,42 +48,13 @@
       console.log("My blog has running {{ systemRunning }} days.");
       console.log("Today page view: 30, total: 300k.");
 
-      // report error to frontjs.
-      (function (w) {
-        w.frontjsConfig = {
-          token: "8293c372ce5e3dacbbd4969ee68809cb",
-          behaviour: 13,
-          optimisedForSPA: true,
-          useHistory: true,
-        };
-        w.frontjsTmpData = { r: [], e: [], l: [] };
-        w.frontjsTmpCollector = function (ev) {
-          (ev.message ? window.frontjsTmpData.e : window.frontjsTmpData.r).push([new Date().getTime(), ev]);
-        };
-        w.FrontJS = {
-          addEventListener: function (t, f) {
-            w.frontjsTmpData.l.push([t, f]);
-            return f;
-          },
-          removeEventListener: function (t, f) {
-            for (var i = 0; i < w.frontjsTmpData.l.length; i++) {
-              t === w.frontjsTmpData.l[i][0] && f === w.frontjsTmpData.l[i][1] && w.frontjsTmpData.l.splice(i, 1);
-            }
-            return f;
-          },
-        };
-        w.document.addEventListener("error", w.frontjsTmpCollector, true);
-        w.addEventListener("error", w.frontjsTmpCollector, true);
-        w.addEventListener(
-          "load",
-          function () {
-            var n = w.document.createElement("script");
-            n.src = "https://static.frontjs.com/dist/current/tracker.min.js";
-            w.document.body.appendChild(n);
-          },
-          true
-        );
-      })(window);
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?5a0bf59b1677eeb569701d469caac324";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
     </script>
     {% block foot %}{% endblock %}
   </body>
