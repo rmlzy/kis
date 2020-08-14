@@ -52,6 +52,7 @@ class CommonController extends Controller {
     const { ctx } = this;
     const { getFileExt } = ctx.helper;
     const { files } = ctx.request;
+    ctx.logger.error("DEBUG: ", file.filepath);
     if (!files || files.length === 0) {
       ctx.body = { success: false, message: "未检测到附件, 请重试" };
       return;
