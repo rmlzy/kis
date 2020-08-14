@@ -256,6 +256,11 @@ code {
   height: 1px;
   margin: 40px 0;
 }
+.kis__blog img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+}
 .kis__blog__like a {
   text-decoration: none;
   color: inherit;
