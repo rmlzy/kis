@@ -60,9 +60,7 @@ class CommonController extends Controller {
       ctx.body = { success: false, message: "仅允许单个文件上传, 请重试" };
       return;
     }
-
     const file = files[0];
-    ctx.logger.error("DEBUG: ", file.filepath);
     const uuid = uuidv4();
     const ext = getFileExt(file.filename);
     const name = `${uuid}__${file.filename}`;

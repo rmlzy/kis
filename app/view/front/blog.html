@@ -3,11 +3,12 @@
 <!-- Head -->
 {% block head %}
 <title>{{ blog.title }}</title>
+<link rel="stylesheet" href="/public/front/lib/viewer/viewer.min.css" />
 {% endblock %}
 
 <!-- Body -->
 {% block body %}
-<div class="kis__blog">
+<div id="js_kisBlog" class="kis__blog">
   <h2>{{ blog.title }}</h2>
   <p>{{ blog.createdAt }}&nbsp;•&nbsp;{{ blog.readTime }}&nbsp;•&nbsp;👀 {{ blog.readCount }} Views</p>
 
@@ -27,6 +28,15 @@
 <!-- Foot -->
 {% block foot %}
 <script src="/public/admin/lib/jquery/jquery-3.5.1.min.js"></script>
+<script src="/public/front/lib/viewer/viewer.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var gallery = new Viewer(document.getElementById("js_kisBlog"));
+    $("#js_kisBlog img").on("click", function () {
+      gallery.show();
+    });
+  });
+</script>
 {% if blog.limited %}
 <script>
   var secret = window.prompt("抱歉，此文章只对石头开放");
