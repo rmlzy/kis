@@ -127,7 +127,8 @@
               }
             },
             error: function (jqXHR, textStatus, errorMessage) {
-              console.log(errorMessage); // Optional
+              layer.msg("文件上传失败", { icon: 5 });
+              layer.closeAll("loading");
             },
           });
           return false;
