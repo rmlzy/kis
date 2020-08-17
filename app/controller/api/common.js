@@ -66,6 +66,8 @@ class CommonController extends Controller {
     const name = `${uuid}__${file.filename}`;
     try {
       const res = await ctx.oss.put(`pdf_report/${name}`, file.filepath);
+      await fs.unlink(file.filepath);
+      await fs.remove("/tmp/egg-multipart-tmp/*");
       ctx.body = {
         success: true,
         message: ctx.__("SuccessSmg"),
@@ -77,9 +79,6 @@ class CommonController extends Controller {
       ctx.runInBackground(async () => {
         await ctx.service.common.notifyAuthor(e);
       });
-    } finally {
-      await fs.unlink(file.filepath);
-      await fs.remove("/tmp/egg-multipart-tmp/*");
     }
   }
 
