@@ -79,6 +79,7 @@ class CommonController extends Controller {
       });
     } finally {
       await fs.unlink(file.filepath);
+      await fs.remove("/tmp/egg-multipart-tmp/*");
     }
   }
 

@@ -8,6 +8,7 @@ module.exports = (app) => {
   const { logged } = middleware;
 
   router.get("/admin/login.html", controller.view.admin.renderLogin);
+  router.get("/admin/dashboard.html", logged(), controller.view.admin.renderDashboard);
   router.get("/admin/blogs.html", logged(), controller.view.admin.renderBlogs);
   router.get("/admin/tags.html", logged(), controller.view.admin.renderTags);
   router.get("/admin/users.html", logged(), controller.view.admin.renderUsers);
