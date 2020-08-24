@@ -245,6 +245,10 @@ code {
 .kis__article {
   margin-bottom: 30px;
 }
+.kis__article h3 {
+  line-height: 1.3;
+  font-size: 1.8em;
+}
 .kis__article .avatar {
   display: inline-block;
   width: 30px;

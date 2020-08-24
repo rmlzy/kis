@@ -12,11 +12,11 @@
 <div class="kis__articles">
   {% for blog in blogs %}
   <article class="kis__article">
-    <h2>
+    <h3>
       <a href="/blog/{{ blog.pathname }}.html" title="{{ blog.title }}">
         {{ "🔥" if blog.status == 'TOP' }}{{ blog.title }}
       </a>
-    </h2>
+    </h3>
     <p>
       {% if blog.User %}
       <span>
