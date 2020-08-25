@@ -3,6 +3,19 @@
 const Controller = require("egg").Controller;
 
 class TagController extends Controller {
+  async list() {
+    const { ctx, service } = this;
+    try {
+      const blogs = await service.tag.findAll({
+        order: [["updatedAt", "DESC"]],
+      });
+      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: blogs };
+    } catch (e) {
+      ctx.logger.error("Error while TagController.list, stack: ", e);
+      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+    }
+  }
+
   async detail() {
     const { ctx, service } = this;
     try {

@@ -2,8 +2,7 @@
 
 module.exports = () => {
   return async function logged(ctx, next) {
-    const jwtToken = ctx.cookies.get("tk");
-
+    const jwtToken = ctx.cookies.get("tk") || ctx.headers["token"];
     if (!jwtToken) {
       ctx.logger.error("logged 用户权限拦截: ", jwtToken);
       ctx.redirect("/404.html");

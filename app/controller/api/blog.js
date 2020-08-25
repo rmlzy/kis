@@ -4,6 +4,19 @@ const Controller = require("egg").Controller;
 const md5 = require("blueimp-md5");
 
 class BlogController extends Controller {
+  async list() {
+    const { ctx, service } = this;
+    try {
+      const blogs = await service.blog.findAll({
+        order: [["updatedAt", "DESC"]],
+      });
+      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: blogs };
+    } catch (e) {
+      ctx.logger.error("Error while BlogController.detail, stack: ", e);
+      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+    }
+  }
+
   async detail() {
     const { ctx, service } = this;
     const { id } = ctx.params;
@@ -23,7 +36,7 @@ class BlogController extends Controller {
   async create() {
     const { ctx, service } = this;
     const { title, pathname, summary, tagIds, categoryId, content, status } = ctx.request.body;
-    const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk"));
+    const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk") || ctx.headers["token"]);
     try {
       const existed = await service.blog.findOne({ where: { pathname } });
       if (existed) {
@@ -73,7 +86,7 @@ class BlogController extends Controller {
     const { id } = ctx.params;
     try {
       // 只能删除自己的文章
-      const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk"));
+      const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk") || ctx.headers["token"]);
       const existed = await service.blog.findOne({ where: { id, userId } });
       if (!existed) {
         ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };

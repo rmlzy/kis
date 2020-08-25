@@ -12,6 +12,7 @@ module.exports = (app) => {
   router.get("/api/v1/captcha", controller.api.common.generateImageCaptcha);
   router.post("/api/v1/login", controller.api.common.login);
   router.post("/api/v1/upload", controller.api.common.upload);
+  router.post("/api/v1/check-token", controller.api.common.checkToken);
   router.post("/api/v1/check-tian-secret", controller.api.blog.checkTianSecret);
 
   // User
@@ -23,6 +24,7 @@ module.exports = (app) => {
   router.put("/api/v1/user/:id/status", logged(), controller.api.user.setStatus);
 
   // Blog
+  router.get("/api/v1/blogs", logged(), controller.api.blog.list);
   router.get("/api/v1/blog/:id", logged(), controller.api.blog.detail);
   router.post("/api/v1/blog", logged(), controller.api.blog.create);
   router.put("/api/v1/blog/:id", logged(), controller.api.blog.update);
@@ -31,12 +33,14 @@ module.exports = (app) => {
   router.put("/api/v1/blog/:id/dislike", controller.api.blog.dislike);
 
   // Tag
+  router.get("/api/v1/tags", logged(), controller.api.tag.list);
   router.get("/api/v1/tag/:id", logged(), controller.api.tag.detail);
   router.post("/api/v1/tag", logged(), controller.api.tag.create);
   router.put("/api/v1/tag/:id", logged(), controller.api.tag.update);
   router.delete("/api/v1/tag/:id", logged(), controller.api.tag.delete);
 
   // Category
+  router.get("/api/v1/categories", logged(), controller.api.category.list);
   router.get("/api/v1/category/:id", logged(), controller.api.category.detail);
   router.post("/api/v1/category", logged(), controller.api.category.create);
   router.put("/api/v1/category/:id", logged(), controller.api.category.update);

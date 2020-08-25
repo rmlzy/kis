@@ -107,6 +107,17 @@ class CommonController extends Controller {
       ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
     }
   }
+
+  async checkToken() {
+    const { ctx } = this;
+    const { token } = ctx.request.body;
+    const userId = ctx.helper.getLoggedIdByToken(token);
+    if (userId) {
+      ctx.body = { success: true, message: "Token 有效", data: userId };
+    } else {
+      ctx.body = { success: false, message: "Token 校验失败" };
+    }
+  }
 }
 
 module.exports = CommonController;
