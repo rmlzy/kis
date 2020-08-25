@@ -50,6 +50,8 @@ class CommonController extends Controller {
    */
   async upload() {
     const { ctx } = this;
+    const t1 = +new Date();
+    ctx.logger.error("开始上传文件: ", t1);
     const { getFileExt } = ctx.helper;
     const { files } = ctx.request;
     if (!files || files.length === 0) {
@@ -64,6 +66,7 @@ class CommonController extends Controller {
     const uuid = uuidv4();
     const ext = getFileExt(file.filename);
     const name = `${uuid}__${file.filename}`;
+    ctx.logger.error("检测到文件: ", name);
     try {
       const res = await ctx.oss.put(`pdf_report/${name}`, file.filepath);
       await fs.unlink(file.filepath);
