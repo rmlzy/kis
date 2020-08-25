@@ -51,7 +51,7 @@ module.exports = (app) => {
 
     // 内容
     content: {
-      type: STRING(10000),
+      type: STRING(20000),
       defaultValue: "",
     },
 
