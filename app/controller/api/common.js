@@ -67,21 +67,23 @@ class CommonController extends Controller {
     const ext = getFileExt(file.filename);
     const name = `${uuid}__${file.filename}`;
     ctx.logger.error("检测到文件: ", name);
+    ctx.logger.error("filepath:", file.filepath);
+    let res;
     try {
-      const res = await ctx.oss.put(`pdf_report/${name}`, file.filepath);
+      res = await ctx.oss.put(`kis/${name}`, file.filepath);
+    } catch (e) {
+      ctx.logger.error("ERROR while common/uploadOss : ", e);
+    } finally {
       await fs.unlink(file.filepath);
-      await fs.remove("/tmp/egg-multipart-tmp/*");
+    }
+    if (res) {
       ctx.body = {
         success: true,
         message: ctx.__("SuccessSmg"),
         data: { uuid, name: file.filename, ext, url: res.url },
       };
-    } catch (e) {
-      ctx.logger.error("ERROR while common/uploadOss : ", e);
+    } else {
       ctx.body = { success: false, message: "文件上传失败, 请重试" };
-      ctx.runInBackground(async () => {
-        await ctx.service.common.notifyAuthor(e);
-      });
     }
   }
 
