@@ -5,7 +5,6 @@ class BlogService extends Service {
     const { ctx } = this;
     return ctx.model.Blog.findAll({
       ...condition,
-      attributes: { exclude: ["content"] },
       include: [
         { model: ctx.model.Category, attributes: ["id", "name", "pathname"] },
         { model: ctx.model.Tag, attributes: ["id", "name"] },
