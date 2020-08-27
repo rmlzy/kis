@@ -451,7 +451,7 @@ code {
 }
 @media (prefers-color-scheme: dark) {
   body {
-    color: #bebebe;
+    color: #ccc;
     background: #242424 url("/public/img/dark-bg.png");
   }
   a {
