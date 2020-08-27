@@ -17,16 +17,13 @@
         {{ "🔥" if blog.status == 'TOP' }}{{ blog.title }}
       </a>
     </h3>
-    <p>
+    <div class="kis__desc">
       {% if blog.User %}
-      <span>
-        <img class="avatar" src="{{ blog.User.avatar }}" alt="{{ blog.User.nickname }}" />
-        {{ blog.User.nickname }}&nbsp;•&nbsp;
-      </span>
+      <img class="avatar" src="{{ blog.User.avatar }}" alt="{{ blog.User.nickname }}" />
+      <span>{{ blog.User.nickname }}&nbsp;•&nbsp;</span>
       {% endif %}
-      <span>{{ blog.createdAt }}&nbsp;•&nbsp;</span>
-      <span>{{ blog.readTime }}</span>
-    </p>
+      <span>{{ blog.createdAt }}</span>
+    </div>
     <p>{{ blog.summary }}</p>
   </article>
   {% endfor %}

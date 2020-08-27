@@ -24,8 +24,7 @@ class FrontViewController extends Controller {
       blogs = blogs
         .map((el) => el.get({ plain: true }))
         .map((blog) => {
-          blog.createdAt = dayjs(blog.createdAt).format("MMMM D, YYYY");
-          blog.readTime = ctx.helper.calcReadTime(blog.content.length);
+          blog.createdAt = dayjs(blog.createdAt).format("YYYY年MM月DD日");
           return blog;
         });
     } catch (e) {
@@ -49,8 +48,7 @@ class FrontViewController extends Controller {
         return;
       }
       blog = blog.get({ plain: true });
-      blog.createdAt = dayjs(blog.createdAt).format("MMMM D, YYYY");
-      blog.readTime = ctx.helper.calcReadTime(blog.content.length);
+      blog.createdAt = dayjs(blog.createdAt).format("YYYY年MM月DD日");
       if (blog.type === "MARKDOWN") {
         blog.content = ctx.helper.md2html(blog.content);
       }

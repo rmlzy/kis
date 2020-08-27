@@ -9,8 +9,8 @@
 <!-- Body -->
 {% block body %}
 <div id="js_kisBlog" class="kis__blog">
-  <h2>{{ blog.title }}</h2>
-  <p>{{ blog.createdAt }}&nbsp;•&nbsp;{{ blog.readTime }}&nbsp;•&nbsp;👀 {{ blog.readCount }} Views</p>
+  <h2 class="kis__blog__title">{{ blog.title }}</h2>
+  <p><small>{{ blog.createdAt }}&nbsp;•&nbsp;👀 {{ blog.readCount }} 人浏览</small></p>
 
   {% if blog.limited %}
   <div class="markdown-body">
