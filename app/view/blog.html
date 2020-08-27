@@ -20,7 +20,15 @@
     </div>
   </div>
   {% else %}
+  <!--  -->
+  {% if blog.type === 'MARKDOWN' %}
   <div class="markdown-body">{{ blog.content | safe }}</div>
+  {% endif %}
+  <!--  -->
+  {% if blog.type === 'RICH_TEXT' %}
+  <div class="ql-editor">{{ blog.content | safe }}</div>
+  {% endif %}
+  <!--  -->
   {% endif %}
 </div>
 {% endblock %}
