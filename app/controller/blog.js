@@ -5,11 +5,9 @@ const Controller = require("egg").Controller;
 class BlogController extends Controller {
   async list() {
     const { ctx, service } = this;
-    const { status } = ctx.request.query;
     try {
       const blogs = await service.blog.findAll({
         order: [["updatedAt", "DESC"]],
-        where: { status: status },
       });
       ctx.body = { success: true, message: "操作成功", data: blogs };
     } catch (e) {
