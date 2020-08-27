@@ -5,7 +5,7 @@ class UserService extends Service {
     const { ctx } = this;
     return ctx.model.User.findAll({
       ...condition,
-      attributes: { exclude: ["password"] },
+      attributes: { exclude: ["password", "token"] },
     });
   }
 
@@ -13,7 +13,7 @@ class UserService extends Service {
     const { ctx } = this;
     return ctx.model.User.findOne({
       ...condition,
-      attributes: { exclude: ["password"] },
+      attributes: { exclude: ["password", "token"] },
     });
   }
 
@@ -25,11 +25,6 @@ class UserService extends Service {
   async update(row, condition) {
     const { ctx } = this;
     return ctx.model.User.update(row, condition);
-  }
-
-  async bulkCreate(row, condition) {
-    const { ctx } = this;
-    return ctx.model.User.bulkCreate(row, condition);
   }
 
   async destroy(condition) {
@@ -50,7 +45,7 @@ class UserService extends Service {
   }
 
   async generateToken(email, password) {
-    const { config, ctx } = this;
+    const { ctx } = this;
     const user = await this.findOne({
       where: {
         email,

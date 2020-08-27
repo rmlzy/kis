@@ -21,11 +21,6 @@ class CategoryService extends Service {
     return ctx.model.Category.update(row, condition);
   }
 
-  async bulkCreate(row, condition) {
-    const { ctx } = this;
-    return ctx.model.Category.bulkCreate(row, condition);
-  }
-
   async destroy(condition) {
     const { ctx } = this;
     return ctx.model.Category.destroy(condition);
