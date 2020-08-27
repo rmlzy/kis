@@ -1,7 +1,6 @@
 "use strict";
 
 const Controller = require("egg").Controller;
-const md5 = require("blueimp-md5");
 
 class BlogController extends Controller {
   async list() {
@@ -9,11 +8,12 @@ class BlogController extends Controller {
     try {
       const blogs = await service.blog.findAll({
         order: [["updatedAt", "DESC"]],
+        where: { status: ["PUBLISHED", "TOP"] },
       });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: blogs };
+      ctx.body = { success: true, message: "操作成功", data: blogs };
     } catch (e) {
-      ctx.logger.error("Error while BlogController.detail, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.logger.error("Error while BlogController.list, stack: ", e);
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -23,24 +23,24 @@ class BlogController extends Controller {
     try {
       const existed = await service.blog.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
-      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: existed };
+      ctx.body = { success: true, message: "操作成功", data: existed };
     } catch (e) {
       ctx.logger.error("Error while BlogController.detail, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
   async create() {
     const { ctx, service } = this;
     const { title, type, pathname, summary, tagIds, categoryId, content, status } = ctx.request.body;
-    const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk") || ctx.headers["token"]);
+    const userId = ctx.helper.getLoggedIdByToken(ctx.headers["token"]);
     try {
       const existed = await service.blog.findOne({ where: { pathname } });
       if (existed) {
-        ctx.body = { success: false, message: ctx.__("ExistMsg", pathname) };
+        ctx.body = { success: false, message: `${pathname} 已存在` };
         return;
       }
       const created = await service.blog.create({
@@ -55,10 +55,10 @@ class BlogController extends Controller {
       });
       const tags = await service.tag.findAll({ where: { id: tagIds } });
       await created.setTags(tags);
-      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: created.id };
+      ctx.body = { success: true, message: "操作成功", data: created.id };
     } catch (e) {
       ctx.logger.error("Error while BlogController.create, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -69,16 +69,16 @@ class BlogController extends Controller {
     try {
       const existed = await service.blog.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const tags = await service.tag.findAll({ where: { id: tagIds } });
       await existed.update({ title, type, pathname, summary, categoryId, content, status });
       await existed.setTags(tags);
-      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: id };
+      ctx.body = { success: true, message: "操作成功", data: id };
     } catch (e) {
       ctx.logger.error("Error while BlogController.create, update: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -87,18 +87,18 @@ class BlogController extends Controller {
     const { id } = ctx.params;
     try {
       // 只能删除自己的文章
-      const userId = ctx.helper.getLoggedIdByToken(ctx.cookies.get("tk") || ctx.headers["token"]);
+      const userId = ctx.helper.getLoggedIdByToken(ctx.headers["token"]);
       const existed = await service.blog.findOne({ where: { id, userId } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const deleted = await service.blog.destroy({ where: { id } });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: id };
+      ctx.body = { success: true, message: "操作成功", data: id };
     } catch (e) {
       console.log(e);
       ctx.logger.error("Error while BlogController.delete, update: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -109,7 +109,7 @@ class BlogController extends Controller {
     try {
       const existed = await service.blog.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const row = {
@@ -119,12 +119,12 @@ class BlogController extends Controller {
       const updated = await service.blog.update(row, { where: { id } });
       ctx.body = {
         success: true,
-        message: ctx.__("SuccessSmg"),
+        message: "操作成功",
         data: row,
       };
     } catch (e) {
       ctx.logger.error("Error while BlogController.like, update: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -135,7 +135,7 @@ class BlogController extends Controller {
     try {
       const existed = await service.blog.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const row = {
@@ -145,12 +145,12 @@ class BlogController extends Controller {
       const updated = await service.blog.update(row, { where: { id } });
       ctx.body = {
         success: true,
-        message: ctx.__("SuccessSmg"),
+        message: "操作成功",
         data: row,
       };
     } catch (e) {
       ctx.logger.error("Error while BlogController.like, update: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -161,8 +161,9 @@ class BlogController extends Controller {
       ctx.body = { success: false, message: "抱歉, 您没有权限" };
       return;
     }
-    const rightMd5 = md5(config.tianSecret);
-    if (md5(secret) !== rightMd5) {
+    const rightMd5 = ctx.helper.md5(config.tianSecret);
+    const userMd5 = ctx.helper.md5(secret);
+    if (userMd5 !== rightMd5) {
       ctx.body = { success: false, message: "抱歉, 您没有权限" };
       return;
     }

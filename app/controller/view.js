@@ -2,11 +2,10 @@
 
 const Controller = require("egg").Controller;
 const dayjs = require("dayjs");
-const md5 = require("blueimp-md5");
 
 class FrontViewController extends Controller {
   async render404() {
-    await this.ctx.render("front/404.html");
+    await this.ctx.render("404.html");
   }
 
   async renderHome() {
@@ -32,10 +31,7 @@ class FrontViewController extends Controller {
     } catch (e) {
       // ignore
     }
-    ctx.runInBackground(async () => {
-      await ctx.service.visitor.create();
-    });
-    await ctx.render("front/home.html", {
+    await ctx.render("home.html", {
       currentNav: "home",
       blogs,
     });
@@ -60,7 +56,7 @@ class FrontViewController extends Controller {
       }
 
       // Limit for Tian
-      const isRightSecret = md5(config.tianSecret) === secret;
+      const isRightSecret = ctx.helper.md5(config.tianSecret) === secret;
       if (blog.Category && blog.Category.pathname === "letter-to-Tian") {
         blog.limited = true;
       }
@@ -73,7 +69,7 @@ class FrontViewController extends Controller {
     ctx.runInBackground(async () => {
       await ctx.service.blog.update({ readCount: blog.readCount + 1 }, { where: { pathname } });
     });
-    await ctx.render("front/blog.html", {
+    await ctx.render("blog.html", {
       currentNav: "home",
       title: blog.title,
       blog,

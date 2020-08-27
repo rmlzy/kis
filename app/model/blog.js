@@ -79,10 +79,10 @@ module.exports = (app) => {
       defaultValue: 0,
     },
 
-    // 状态: 草稿、已发布、置顶
+    // 状态: 草稿、已发布、置顶、已删除
     status: {
       type: STRING(10),
-      values: ["DRAFT", "PUBLISHED", "TOP", "HIDE"],
+      values: ["DRAFT", "PUBLISHED", "TOP", "HIDE", "DELETED"],
       defaultValue: "DRAFT",
     },
 

@@ -3,19 +3,32 @@
 const Controller = require("egg").Controller;
 
 class UserController extends Controller {
+  async list() {
+    const { ctx, service } = this;
+    try {
+      const users = await service.user.findAll({
+        order: [["updatedAt", "DESC"]],
+      });
+      ctx.body = { success: true, message: "操作成功", data: users };
+    } catch (e) {
+      ctx.logger.error("Error while UserController.list, stack: ", e);
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
+    }
+  }
+
   async detail() {
     const { ctx, service } = this;
     try {
       const { id } = ctx.params;
       const existed = await service.user.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       ctx.body = { success: true, data: existed };
     } catch (e) {
       ctx.logger.error("Error while UserController.detail, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -25,7 +38,7 @@ class UserController extends Controller {
     try {
       const existed = await service.user.findOne({ where: { email } });
       if (existed) {
-        ctx.body = { success: false, message: ctx.__("ExistMsg", email) };
+        ctx.body = { success: false, message: `${email} 已存在` };
         return;
       }
       const created = await service.user.create({
@@ -36,10 +49,10 @@ class UserController extends Controller {
         level,
         status,
       });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功", data: created.id };
     } catch (e) {
       ctx.logger.error("Error while UserController.create, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -51,7 +64,7 @@ class UserController extends Controller {
     try {
       const idExisted = await service.user.findOne({ where: { id: Number(id) } });
       if (!idExisted) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const emailExisted = await service.user.findOne({
@@ -61,14 +74,14 @@ class UserController extends Controller {
         },
       });
       if (emailExisted) {
-        ctx.body = { success: false, message: ctx.__("ExistMsg", email) };
+        ctx.body = { success: false, message: `${email} 已存在` };
         return;
       }
       const updated = await service.user.update({ avatar, nickname, email, level, status }, { where: { id } });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功" };
     } catch (e) {
       ctx.logger.error("Error while UserController.create, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -78,14 +91,14 @@ class UserController extends Controller {
     try {
       const existed = await service.user.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const deleted = await service.user.destroy({ where: { id } });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功" };
     } catch (e) {
       ctx.logger.error("Error while UserController.delete, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -96,14 +109,14 @@ class UserController extends Controller {
     try {
       const existed = await service.user.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const updated = await service.user.update({ level }, { where: { id } });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功" };
     } catch (e) {
       ctx.logger.error("Error while UserController.delete, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -114,14 +127,14 @@ class UserController extends Controller {
     try {
       const existed = await service.user.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const updated = await service.user.update({ status, token: "" }, { where: { id } });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功" };
     } catch (e) {
       ctx.logger.error("Error while UserController.delete, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 }

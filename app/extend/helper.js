@@ -19,6 +19,10 @@ const md = MarkdownIt({
 });
 
 module.exports = {
+  md5(str) {
+    return md5(str);
+  },
+
   md2html(markdown) {
     return md.render(markdown);
   },

@@ -1,8 +1,5 @@
 "use strict";
 
-/**
- * @param {Egg.EggAppInfo} appInfo app info
- */
 module.exports = (appInfo) => {
   const config = (exports = {});
 
@@ -26,7 +23,7 @@ module.exports = (appInfo) => {
   config.description = "远子和 Poppy 的小站, 记录一下关于开发、设计的文章";
   config.keywords = "poppy, rmlzy, 远子, 产品设计, 前端开发, 技术博客";
   config.author = {
-    name: "Jason Liu",
+    name: "远子",
     email: "rmlzy@outlook.com",
     github: "https://github.com/rmlzy",
     twitter: "https://twitter.com/rmlzy",
@@ -79,20 +76,6 @@ module.exports = (appInfo) => {
     mode: "file",
     fileExtensions: [".pdf", ".png", ".jpg", ".jpeg"],
     fileSize: "5mb",
-  };
-
-  // 国际化
-  exports.i18n = {
-    // 默认语言，默认 "en_US"
-    defaultLocale: "zh-CN",
-    // URL 参数，默认 "locale"
-    queryField: "locale",
-    // Cookie 记录的 key, 默认："locale"
-    cookieField: "locale",
-    // Cookie 的 domain 配置，默认为空，代表当前域名有效
-    cookieDomain: "",
-    // Cookie 默认 `1y` 一年后过期， 如果设置为 Number，则单位为 ms
-    cookieMaxAge: "1y",
   };
 
   return config;

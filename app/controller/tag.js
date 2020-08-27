@@ -9,10 +9,10 @@ class TagController extends Controller {
       const blogs = await service.tag.findAll({
         order: [["updatedAt", "DESC"]],
       });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg"), data: blogs };
+      ctx.body = { success: true, message: "操作成功", data: blogs };
     } catch (e) {
       ctx.logger.error("Error while TagController.list, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -22,13 +22,13 @@ class TagController extends Controller {
       const { id } = ctx.params;
       const existed = await service.tag.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       ctx.body = { success: true, data: existed };
     } catch (e) {
       ctx.logger.error("Error while TagController.detail, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -36,16 +36,21 @@ class TagController extends Controller {
     const { ctx, service } = this;
     const { name, pathname, description } = ctx.request.body;
     try {
-      const existed = await service.tag.findOne({ where: { pathname } });
-      if (existed) {
-        ctx.body = { success: false, message: ctx.__("ExistMsg", pathname) };
+      const nameExisted = await service.tag.findOne({ where: { name } });
+      if (nameExisted) {
+        ctx.body = { success: false, message: `${name} 已存在` };
+        return;
+      }
+      const pathNameExisted = await service.tag.findOne({ where: { pathname } });
+      if (pathNameExisted) {
+        ctx.body = { success: false, message: `${pathname} 已存在` };
         return;
       }
       const created = await service.tag.create({ name, pathname, description });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功", data: created.id };
     } catch (e) {
       ctx.logger.error("Error while TagController.create, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -57,7 +62,7 @@ class TagController extends Controller {
     try {
       const idExisted = await service.tag.findOne({ where: { id: Number(id) } });
       if (!idExisted) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const pathNameExisted = await service.tag.findOne({
@@ -67,14 +72,14 @@ class TagController extends Controller {
         },
       });
       if (pathNameExisted) {
-        ctx.body = { success: false, message: ctx.__("ExistMsg", pathname) };
+        ctx.body = { success: false, message: `${pathname} 不存在` };
         return;
       }
       const updated = await service.tag.update({ name, pathname, description }, { where: { id } });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功" };
     } catch (e) {
       ctx.logger.error("Error while TagController.create, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 
@@ -84,14 +89,14 @@ class TagController extends Controller {
     try {
       const existed = await service.tag.findOne({ where: { id } });
       if (!existed) {
-        ctx.body = { success: false, message: ctx.__("NotExistMsg", id) };
+        ctx.body = { success: false, message: `${id} 不存在` };
         return;
       }
       const deleted = await service.tag.destroy({ where: { id } });
-      ctx.body = { success: true, message: ctx.__("SuccessSmg") };
+      ctx.body = { success: true, message: "操作成功" };
     } catch (e) {
       ctx.logger.error("Error while TagController.delete, stack: ", e);
-      ctx.body = { success: false, message: ctx.__("InnerErrorMsg") };
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
     }
   }
 }

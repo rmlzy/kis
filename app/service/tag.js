@@ -21,11 +21,6 @@ class TagService extends Service {
     return ctx.model.Tag.update(row, condition);
   }
 
-  async bulkCreate(row, condition) {
-    const { ctx } = this;
-    return ctx.model.Tag.bulkCreate(row, condition);
-  }
-
   async destroy(condition) {
     const { ctx } = this;
     return ctx.model.Tag.destroy(condition);

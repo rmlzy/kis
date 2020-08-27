@@ -6,43 +6,44 @@
 module.exports = (app) => {
   const { router, middleware, controller } = app;
   const { logged } = middleware;
+  const v = "v1";
 
   // Common
-  router.post("/api/v1/getFullUrlByBlogTitle", controller.api.common.getFullUrlByBlogTitle);
-  router.get("/api/v1/captcha", controller.api.common.generateImageCaptcha);
-  router.post("/api/v1/login", controller.api.common.login);
-  router.post("/api/v1/upload", controller.api.common.upload);
-  router.post("/api/v1/check-token", controller.api.common.checkToken);
-  router.post("/api/v1/check-tian-secret", controller.api.blog.checkTianSecret);
+  router.get(`/api/${v}/captcha`, controller.common.genCaptcha);
+  router.post(`/api/${v}/login`, controller.common.login);
+  router.post(`/api/${v}/upload`, logged(), controller.common.upload);
+  router.post(`/api/${v}/check-token`, controller.common.checkToken);
+  router.post(`/api/${v}/check-tian-secret`, controller.blog.checkTianSecret);
 
   // User
-  router.get("/api/v1/user/:id", logged(), controller.api.user.detail);
-  router.post("/api/v1/user", logged(), controller.api.user.create);
-  router.put("/api/v1/user/:id", logged(), controller.api.user.update);
-  router.delete("/api/v1/user/:id", logged(), controller.api.user.delete);
-  router.put("/api/v1/user/:id/level", logged(), controller.api.user.setLevel);
-  router.put("/api/v1/user/:id/status", logged(), controller.api.user.setStatus);
+  router.get(`/api/${v}/user`, logged(), controller.user.list);
+  router.get(`/api/${v}/user/:id`, logged(), controller.user.detail);
+  router.post(`/api/${v}/user`, logged(), controller.user.create);
+  router.put(`/api/${v}/user/:id`, logged(), controller.user.update);
+  router.delete(`/api/${v}/user/:id`, logged(), controller.user.delete);
+  router.put(`/api/${v}/user/:id/level`, logged(), controller.user.setLevel);
+  router.put(`/api/${v}/user/:id/status`, logged(), controller.user.setStatus);
 
   // Blog
-  router.get("/api/v1/blogs", logged(), controller.api.blog.list);
-  router.get("/api/v1/blog/:id", logged(), controller.api.blog.detail);
-  router.post("/api/v1/blog", logged(), controller.api.blog.create);
-  router.put("/api/v1/blog/:id", logged(), controller.api.blog.update);
-  router.delete("/api/v1/blog/:id", logged(), controller.api.blog.delete);
-  router.put("/api/v1/blog/:id/like", controller.api.blog.like);
-  router.put("/api/v1/blog/:id/dislike", controller.api.blog.dislike);
+  router.get(`/api/${v}/blog`, logged(), controller.blog.list);
+  router.get(`/api/${v}/blog/:id`, controller.blog.detail); // 文章详情无需权限拦截
+  router.post(`/api/${v}/blog`, logged(), controller.blog.create);
+  router.put(`/api/${v}/blog/:id`, logged(), controller.blog.update);
+  router.delete(`/api/${v}/blog/:id`, logged(), controller.blog.delete);
+  router.put(`/api/${v}/blog/:id/like`, controller.blog.like);
+  router.put(`/api/${v}/blog/:id/dislike`, controller.blog.dislike);
 
   // Tag
-  router.get("/api/v1/tags", logged(), controller.api.tag.list);
-  router.get("/api/v1/tag/:id", logged(), controller.api.tag.detail);
-  router.post("/api/v1/tag", logged(), controller.api.tag.create);
-  router.put("/api/v1/tag/:id", logged(), controller.api.tag.update);
-  router.delete("/api/v1/tag/:id", logged(), controller.api.tag.delete);
+  router.get(`/api/${v}/tag`, logged(), controller.tag.list);
+  router.get(`/api/${v}/tag/:id`, logged(), controller.tag.detail);
+  router.post(`/api/${v}/tag`, logged(), controller.tag.create);
+  router.put(`/api/${v}/tag/:id`, logged(), controller.tag.update);
+  router.delete(`/api/${v}/tag/:id`, logged(), controller.tag.delete);
 
   // Category
-  router.get("/api/v1/categories", logged(), controller.api.category.list);
-  router.get("/api/v1/category/:id", logged(), controller.api.category.detail);
-  router.post("/api/v1/category", logged(), controller.api.category.create);
-  router.put("/api/v1/category/:id", logged(), controller.api.category.update);
-  router.delete("/api/v1/category/:id", logged(), controller.api.category.delete);
+  router.get(`/api/${v}/category`, logged(), controller.category.list);
+  router.get(`/api/${v}/category/:id`, logged(), controller.category.detail);
+  router.post(`/api/${v}/category`, logged(), controller.category.create);
+  router.put(`/api/${v}/category/:id`, logged(), controller.category.update);
+  router.delete(`/api/${v}/category/:id`, logged(), controller.category.delete);
 };
