@@ -145,7 +145,7 @@ code {
 }
 @media (prefers-color-scheme: light) {
   body {
-    background: #f0f0f0 url("/public/front/img/light-bg.png");
+    background: #f0f0f0 url("/public/img/light-bg.png");
     color: #292525;
   }
   a {
@@ -173,7 +173,7 @@ code {
 @media (prefers-color-scheme: dark) {
   body {
     color: #bebebe;
-    background: #242424 url("/public/front/img/dark-bg.png");
+    background: #242424 url("/public/img/dark-bg.png");
   }
   a {
     color: #e6be6a;

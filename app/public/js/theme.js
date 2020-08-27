@@ -1,6 +1,6 @@
 function setHljsCss(isDark) {
   var cssName = isDark ? "darcula.css" : "github.css";
-  var cssUrl = "/public/front/lib/highlight/styles/" + cssName;
+  var cssUrl = "/public/lib/highlight/styles/" + cssName;
   var styleEl = document.getElementById("js_hljsCss");
   styleEl.setAttribute("href", cssUrl);
 }
