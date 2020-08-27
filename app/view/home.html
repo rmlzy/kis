@@ -20,9 +20,9 @@
     <div class="kis__desc">
       {% if blog.User %}
       <img class="avatar" src="{{ blog.User.avatar }}" alt="{{ blog.User.nickname }}" />
-      <span>{{ blog.User.nickname }}&nbsp;•&nbsp;</span>
+      <small>{{ blog.User.nickname }}&nbsp;•&nbsp;</small>
       {% endif %}
-      <span>{{ blog.createdAt }}</span>
+      <small>{{ blog.createdAt }}</small>
     </div>
     <p>{{ blog.summary }}</p>
   </article>
