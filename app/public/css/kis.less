@@ -9,11 +9,17 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
     Segoe UI Emoji;
-  font-size: 17px;
+  font-size: 16px;
   word-wrap: break-word;
+  letter-spacing: 0.8px;
 }
 
-p, li {
+small {
+  font-size: 13px;
+}
+
+p,
+li {
   line-height: 1.8;
 }
 
@@ -22,11 +28,18 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: Palatino, Helvetica, serif;
+  font-weight: 400;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
 }
 
-li {
-  margin-bottom: 5px;
+h2 {
+  margin-bottom: 40px;
+  padding: 5px;
+}
+
+h3 {
+  margin-top: 40px;
+  margin-bottom: 30px;
 }
 
 a {
@@ -48,7 +61,7 @@ a {
 }
 
 code {
-  padding: 2px 5px;
+  padding: 2px 8px;
   border-radius: 2px;
 }
 
@@ -88,9 +101,14 @@ code {
     border-bottom: 1px solid #dfe2e5;
   }
 
-  kbd, pre, code {
+  kbd,
+  pre,
+  code {
     border: 1px solid #dfe2e5;
-    font-size: 14px;
+  }
+
+  code {
+    color: #d73a49;
   }
 
   pre,
@@ -136,9 +154,15 @@ code {
     border-bottom: 1px solid #202124;
   }
 
-  kbd, pre, code {
+  kbd,
+  pre,
+  code {
     border: 1px solid #202124;
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  code {
+    color: #cb7832;
   }
 
   pre,
@@ -214,7 +238,7 @@ code {
 
     h3 {
       line-height: 1.3;
-      font-size: 1.4em;
+      font-size: 1.5em;
       margin-bottom: 0.5em;
     }
 
@@ -240,6 +264,7 @@ code {
   &__blog {
     &__title {
       padding-bottom: 8px;
+      margin-bottom: 20px;
     }
 
     img {
