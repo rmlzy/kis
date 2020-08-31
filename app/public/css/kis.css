@@ -856,11 +856,24 @@ code {
   kbd {
     background-color: rgba(255, 255, 255, 0.55);
   }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #d73a49;
+  }
 }
 @media (prefers-color-scheme: dark) {
   body {
     color: #ccc;
-    background: #242424 url("/public/img/dark-bg.png");
+    background: #323232 url("/public/img/dark-bg.png");
   }
   a {
     color: #e6be6a;
@@ -897,6 +910,20 @@ code {
   code,
   kbd {
     background-color: rgba(255, 255, 255, 0.1);
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent !important;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    display: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #e6be6a;
   }
 }
 .kis {
