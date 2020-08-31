@@ -7,7 +7,7 @@ class BlogController extends Controller {
     const { ctx, service } = this;
     try {
       const blogs = await service.blog.findAll({
-        order: [["updatedAt", "DESC"]],
+        order: [["id", "DESC"]],
       });
       ctx.body = { success: true, message: "操作成功", data: blogs };
     } catch (e) {

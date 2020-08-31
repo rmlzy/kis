@@ -3,6 +3,23 @@
 const Controller = require("egg").Controller;
 
 class UserController extends Controller {
+  async info() {
+    const { ctx, service } = this;
+    const { token } = ctx.request.query;
+    const userId = ctx.helper.getLoggedIdByToken(token);
+    try {
+      const existed = await service.user.findOne({ where: { id: userId } });
+      if (!existed) {
+        ctx.body = { success: false, message: `${userId} 不存在` };
+        return;
+      }
+      ctx.body = { success: true, data: existed };
+    } catch (e) {
+      ctx.logger.error("Error while UserController.info, stack: ", e);
+      ctx.body = { success: false, message: "抱歉, 内部服务器错误" };
+    }
+  }
+
   async list() {
     const { ctx, service } = this;
     try {

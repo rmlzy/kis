@@ -16,6 +16,7 @@ module.exports = (app) => {
   router.post(`/api/${v}/check-tian-secret`, controller.blog.checkTianSecret);
 
   // User
+  router.get(`/api/${v}/user-info`, logged(), controller.user.info);
   router.get(`/api/${v}/user`, logged(), controller.user.list);
   router.get(`/api/${v}/user/:id`, logged(), controller.user.detail);
   router.post(`/api/${v}/user`, logged(), controller.user.create);
