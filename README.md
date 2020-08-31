@@ -4,7 +4,7 @@ A simple open source blog build with egg.js, sequelize.
 
 ## QuickStart
 
-see [docs][http://poppython.com/blog/kis-doc.html] for more detail.
+see [docs](http://poppython.com/blog/kis-doc.html) for more detail.
 
 ### Development
 
