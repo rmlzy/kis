@@ -64,12 +64,8 @@ class CommonController extends Controller {
   }
 
   async login() {
-    const { ctx, service, config } = this;
-    const { code, email, password, captcha } = ctx.request.body;
-    if (config.keys !== code) {
-      ctx.body = { success: false, message: "用户名或密码错误" };
-      return;
-    }
+    const { ctx, service } = this;
+    const { email, password, captcha } = ctx.request.body;
     if (captcha.toLowerCase() !== ctx.session.captcha.toLowerCase()) {
       ctx.body = { success: false, message: "验证码错误" };
       return;
