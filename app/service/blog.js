@@ -42,7 +42,7 @@ class BlogService extends Service {
 
   async destroy(condition) {
     const { ctx } = this;
-    return ctx.model.Blog.update({ status: "DELETED" }, condition);
+    return ctx.model.Blog.destroy(condition);
   }
 }
 
