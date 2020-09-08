@@ -4,6 +4,29 @@ const Controller = require("egg").Controller;
 const dayjs = require("dayjs");
 
 class FrontViewController extends Controller {
+  async _fetchBlogs(where) {
+    const { service } = this;
+    const condition = { order: [["createdAt", "DESC"]] };
+    if (where) condition.where = where;
+    const allBlogs = await service.blog.findAll(condition);
+    const topped = [];
+    const published = [];
+    allBlogs.forEach((blog) => {
+      if (blog.status === "TOP") {
+        topped.push(blog);
+      }
+      if (blog.status === "PUBLISHED") {
+        published.push(blog);
+      }
+    });
+    return [...topped, ...published]
+      .map((el) => el.get({ plain: true }))
+      .map((blog) => {
+        blog.createdAt = dayjs(blog.createdAt).format("YYYY年MM月DD日");
+        return blog;
+      });
+  }
+
   async render404() {
     await this.ctx.render("404.html");
   }
@@ -11,28 +34,33 @@ class FrontViewController extends Controller {
   async renderHome() {
     const { ctx, service } = this;
     let blogs = [];
+    let categories = [];
     try {
-      const topped = await service.blog.findAll({
-        order: [["createdAt", "DESC"]],
-        where: { status: "TOP" },
-      });
-      const published = await service.blog.findAll({
-        order: [["createdAt", "DESC"]],
-        where: { status: "PUBLISHED" },
-      });
-      blogs = [...topped, ...published];
-      blogs = blogs
-        .map((el) => el.get({ plain: true }))
-        .map((blog) => {
-          blog.createdAt = dayjs(blog.createdAt).format("YYYY年MM月DD日");
-          return blog;
-        });
+      blogs = await this._fetchBlogs();
+      categories = await service.category.findAll();
     } catch (e) {
       // ignore
     }
     await ctx.render("home.html", {
-      currentNav: "home",
       blogs,
+      categories,
+    });
+  }
+
+  async renderCategory() {
+    const { ctx, service } = this;
+    const { id } = ctx.params;
+    let blogs = [];
+    let categories = [];
+    try {
+      blogs = await this._fetchBlogs({ categoryId: id });
+      categories = await service.category.findAll();
+    } catch (e) {
+      // ignore
+    }
+    await ctx.render("home.html", {
+      blogs,
+      categories,
     });
   }
 
@@ -68,7 +96,6 @@ class FrontViewController extends Controller {
       await ctx.service.blog.update({ readCount: blog.readCount + 1 }, { where: { pathname } });
     });
     await ctx.render("blog.html", {
-      currentNav: "home",
       title: blog.title,
       blog,
     });

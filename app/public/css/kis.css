@@ -935,10 +935,11 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .kis__hd h1 {
   border: none;
+  margin: 0;
 }
 .kis__hd a {
   text-decoration: none;
@@ -968,6 +969,12 @@ code {
   position: absolute;
   top: 0;
   left: 0;
+}
+.kis__nav a {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  white-space: nowrap;
 }
 .kis__bd {
   margin-bottom: 50px;
