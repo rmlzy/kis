@@ -975,6 +975,7 @@ code {
   margin-right: 10px;
   margin-bottom: 5px;
   white-space: nowrap;
+  text-transform: capitalize;
 }
 .kis__bd {
   margin-bottom: 50px;
