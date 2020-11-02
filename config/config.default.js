@@ -75,7 +75,7 @@ module.exports = (appInfo) => {
   config.multipart = {
     mode: "file",
     fileExtensions: [".pdf", ".png", ".jpg", ".jpeg"],
-    fileSize: "5mb",
+    fileSize: "50mb",
   };
 
   return config;
