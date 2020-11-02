@@ -53,10 +53,12 @@ class CommonController extends Controller {
       await fs.unlink(file.filepath);
     }
     if (res) {
+      // 移除内网后缀
+      const url = res.url.replace("-internal", "");
       ctx.body = {
         success: true,
         message: "操作成功",
-        data: { uuid, name: file.filename, ext, url: res.url },
+        data: { uuid, name: file.filename, ext, url },
       };
     } else {
       ctx.body = { success: false, message: "文件上传失败, 请重试" };
