@@ -28,7 +28,7 @@ module.exports = (appInfo) => {
     github: "https://github.com/rmlzy",
     twitter: "https://twitter.com/rmlzy",
   };
-  config.copyright = "© 2020, poppython.com";
+  config.copyright = "© 2019-2021, poppython.com 鲁ICP备20009856号-2";
 
   // 石头的秘钥
   config.tianSecret = "天逸小帅哥";

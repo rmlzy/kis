@@ -29,7 +29,7 @@
       <img class="avatar" src="{{ blog.User.avatar }}" alt="{{ blog.User.nickname }}" />
       <small>{{ blog.User.nickname }}&nbsp;•&nbsp;</small>
       {% endif %}
-      <small>{{ blog.createdAt }}</small>
+      <small>{{ blog.createdAt }}&nbsp;•&nbsp;👀&nbsp;{{ blog.readCount }} 人浏览</small>
     </div>
     <p>{{ blog.summary }}</p>
   </article>

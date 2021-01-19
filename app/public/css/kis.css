@@ -1,17 +1,3 @@
-.markdown-body .octicon {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: text-bottom;
-}
-.markdown-body .anchor {
-  float: left;
-  line-height: 1;
-  margin-left: -20px;
-  padding-right: 4px;
-}
-.markdown-body .anchor:focus {
-  outline: none;
-}
 .markdown-body {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -334,13 +320,14 @@
   word-wrap: normal;
 }
 .markdown-body pre > code {
+  font-size: 14px;
   padding: 0;
   margin: 0;
-  font-size: 100%;
   word-break: normal;
   white-space: pre;
   background: transparent;
   border: 0;
+  letter-spacing: 0;
 }
 .markdown-body .highlight {
   margin-bottom: 16px;
@@ -769,8 +756,6 @@
   -webkit-box-sizing: border-box;
 }
 body {
-  font-family: PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-  font-size: 16px;
   word-wrap: break-word;
   letter-spacing: 0.8px;
 }
@@ -855,19 +840,6 @@ code {
   kbd {
     background-color: rgba(255, 255, 255, 0.55);
   }
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar:horizontal {
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    display: none;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background-color: #d73a49;
-  }
   .kis__blog img {
     border-color: rgba(255, 255, 255, 0.5) !important;
   }
@@ -913,26 +885,12 @@ code {
   kbd {
     background-color: rgba(255, 255, 255, 0.1);
   }
-  ::-webkit-scrollbar {
-    width: 8px;
-    background-color: transparent !important;
-  }
-  ::-webkit-scrollbar:horizontal {
-    height: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    display: none;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background-color: #e6be6a;
-  }
   .kis__blog img {
     border-color: rgba(0, 0, 0, 0.5) !important;
   }
 }
 .kis {
-  max-width: 677px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 30px 15px;
 }
