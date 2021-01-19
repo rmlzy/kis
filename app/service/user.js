@@ -58,7 +58,7 @@ class UserService extends Service {
         id: user.id,
         level: user.level,
       },
-      { expiresIn: "7d" }
+      { expiresIn: "30d" }
     );
     const row = await ctx.model.User.update({ token }, { where: { id: user.id } });
     return token;
