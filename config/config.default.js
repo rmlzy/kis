@@ -16,6 +16,7 @@ module.exports = (appInfo) => {
   config.rmlzy = "远子";
   config.poppy = "Poppy";
   config.title = `${config.rmlzy} 💖 ${config.poppy}`;
+  config.fallInLoveAt = "2013-07-20";
   config.subtitle =
     "<p><a href='/blog/about-rmlzy.html'>远子</a>: 一只程序猿</p>" +
     "<p><a href='/blog/about-poppy.html'>Poppy</a>: 一只产品汪</p>" +

@@ -12,16 +12,15 @@
     <meta property="og:image" content="/public/img/logo.png?v={{ version }}" />
     <link rel="apple-touch-icon" href="/public/img/logo.png?v={{ version }}" />
     <link rel="shortcut icon" href="/public/img/favicon.ico?v={{ version }}" />
-    <link id="js_hljsCss" rel="stylesheet" href="/public/lib/highlight/styles/github.css" />
+    <link rel="stylesheet" href="/public/lib/highlight/styles/github.css" />
     <link rel="stylesheet" href="/public/css/kis.css?v={{ version }}" />
-    <script src="/public/js/theme.js?v={{ version }}"></script>
     {% block head %}{% endblock %}
   </head>
 
   <body class="kis">
     <header class="kis__hd">
       <h1>
-        <a href="/">
+        <a href="/" title="我们已经相爱{{fallInLove}}天">
           <span>{{ rmlzy }}</span>
           <span class="heart">💖</span>
           <span>{{ poppy }}</span>

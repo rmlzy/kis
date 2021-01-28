@@ -10,176 +10,11 @@
 body {
   word-wrap: break-word;
   letter-spacing: 0.8px;
-}
-
-small {
-  font-size: 13px;
-}
-
-p,
-li {
-  line-height: 1.8;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-weight: 400;
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
-}
-
-h2 {
-  margin-bottom: 40px;
-  padding: 5px;
-}
-
-h3 {
-  margin-top: 40px;
-  margin-bottom: 30px;
-}
-
-a {
-  text-decoration: none;
-  transition: all 0.2s;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.only-for-tian {
-  padding: 50px 0;
-  text-align: center;
-
-  img {
-    border-radius: 5px;
-  }
-}
-
-code {
-  padding: 2px 8px;
-  border-radius: 2px;
-}
-
-@media (prefers-color-scheme: light) {
-  body {
-    background: #f0f0f0 url("/public/img/light-bg.png");
-    color: #292525;
-  }
-
-  a {
-    color: #d73a49;
-  }
-
-  table {
-    td,
-    th {
-      padding: 6px 13px;
-      border: 1px solid #dfe2e5;
-    }
-
-    tr {
-      border-top: 1px solid #dfe2e5;
-
-      &:nth-child(2n) {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-    }
-  }
-
-  blockquote {
-    border-left: 0.25em solid #dfe2e5;
-  }
-
-  h1,
-  h2,
-  hr {
-    border-bottom: 1px solid #dfe2e5;
-  }
-
-  kbd,
-  pre,
-  code {
-    border: 1px solid #dfe2e5;
-  }
-
-  code {
-    color: #d73a49;
-  }
-
-  pre,
-  code,
-  kbd {
-    background-color: rgba(255, 255, 255, 0.55);
-  }
-
-  .kis__blog img {
-    border-color: rgba(255, 255, 255, 0.5) !important;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    color: #ccc;
-    background: #323232 url("/public/img/dark-bg.png");
-  }
-
-  a {
-    color: #e6be6a;
-  }
-
-  table {
-    td,
-    th {
-      padding: 6px 13px;
-      border: 1px solid #202124;
-    }
-
-    tr {
-      border-top: 1px solid #202124;
-
-      &:nth-child(2n) {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-    }
-  }
-
-  blockquote {
-    border-left: 0.25em solid #202124;
-  }
-
-  h1,
-  h2,
-  hr {
-    border-bottom: 1px solid #202124;
-  }
-
-  kbd,
-  pre,
-  code {
-    border: 1px solid #202124;
-    font-size: 13px;
-  }
-
-  code {
-    color: #cb7832;
-  }
-
-  pre,
-  code,
-  kbd {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .kis__blog img {
-    border-color: rgba(0, 0, 0, 0.5) !important;
-  }
+  background: #ededed url("/public/img/light-bg.png");
 }
 
 .kis {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 30px 15px;
 
@@ -192,10 +27,12 @@ code {
     h1 {
       border: none;
       margin: 0;
-    }
+      font-weight: 400;
+      font-family: "Palatino Linotype", "Book Antiqua", Palatino, Helvetica, STKaiti, SimSun, serif;
 
-    a {
-      text-decoration: none;
+      a {
+        text-decoration: none !important;
+      }
     }
 
     .heart {
@@ -254,6 +91,7 @@ code {
     margin-bottom: 2em;
 
     h3 {
+      font-weight: 400;
       line-height: 1.3;
       font-size: 1.5em;
       margin-bottom: 0.5em;
@@ -263,7 +101,7 @@ code {
       display: inline-block;
       width: 30px;
       border-radius: 50%;
-      margin-right: 5px;
+      margin-right: 10px;
     }
   }
 

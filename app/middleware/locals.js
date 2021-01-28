@@ -14,9 +14,10 @@ module.exports = () => {
     ctx.locals.description = ctx.app.config.description;
     ctx.locals.author = ctx.app.config.author;
     ctx.locals.copyright = ctx.app.config.copyright;
+    ctx.locals.fallInLove = ctx.app.config.fallInLoveAt;
 
-    const deployedDate = dayjs(ctx.app.config.firstDeployDate);
-    ctx.locals.systemRunning = today.diff(deployedDate, "day");
+    const fallInLoveDate = dayjs(ctx.app.config.fallInLoveAt);
+    ctx.locals.fallInLove = today.diff(fallInLoveDate, "day");
     await next();
   };
 };
