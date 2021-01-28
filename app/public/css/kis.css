@@ -888,6 +888,7 @@ body {
 .kis__desc {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
 }
 .kis__divider {
   width: 100%;
