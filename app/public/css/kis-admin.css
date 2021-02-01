@@ -13,7 +13,7 @@
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
-  background-image: url("/public/img/login-bg.jpg");
+  background-image: url("/public/img/login-bg.png");
   display: flex;
   align-items: center;
   justify-content: center;
