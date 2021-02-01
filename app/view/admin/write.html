@@ -1,0 +1,281 @@
+{% extends "./base.html" %}
+
+<!-- Head -->
+{% block head %}
+<link rel="stylesheet" href="/public/lib/toastui-editor/codemirror.min.css" />
+<link rel="stylesheet" href="/public/lib/toastui-editor/toastui-editor.min.css" />
+<script>
+  window.initialBlogId = "{{ id }}";
+</script>
+{% endblock %}
+
+<!-- Body -->
+{% block body %}
+<div class="container">
+  <form id="js_writeForm" action="#">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-xs-8">
+          <input type="text" class="form-control" name="title" placeholder="{{ __('Title') }}" />
+        </div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2 text-right">
+          <button id="js_showModalBtn" type="button" class="btn btn-primary">
+            {{ __('Submit') }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div id="editor"></div>
+    </div>
+  </form>
+
+  <div class="modal fade" id="js_writeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <form id="js_modalForm" action="#">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">{{ __('BlogInfo') }}</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="control-label">{{ __('Pathname') }}:</label>
+              <input type="text" class="form-control" name="pathname" maxlength="100" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Summary') }}:</label>
+              <input type="text" class="form-control" name="summary" maxlength="200" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Category') }}:</label>
+              <div class="control-group">
+                {% for category in categories %}
+                <label class="radio-inline">
+                  <input type="radio" name="categoryId" value="{{ category.id }}" />
+                  {{ category.name }}
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Tag') }}:</label>
+              <div class="control-group">
+                {% for tag in tags %}
+                <label class="checkbox-inline">
+                  <input type="checkbox" name="tagIds[]" value="{{ tag.id }}" />
+                  {{ tag.name }}
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Status') }}:</label>
+              <div class="control-group">
+                <label class="radio-inline"><input type="radio" name="status" value="DRAFT" /> 草稿 </label>
+                <label class="radio-inline"><input type="radio" name="status" value="PUBLISHED" /> 立即发布 </label>
+                <label class="radio-inline"><input type="radio" name="status" value="TOP" /> 置顶 </label>
+                <label class="radio-inline"><input type="radio" name="status" value="HIDE" /> 隐藏 </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Close') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- Foot -->
+{% block foot %}
+<script src="/public/lib/toastui-editor/toastui-editor-all.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var $writeForm = $("#js_writeForm");
+    var $modalForm = $("#js_modalForm");
+    var $writeModal = $("#js_writeModal");
+    var editor = new toastui.Editor({
+      el: document.querySelector("#editor"),
+      previewStyle: "tab",
+      height: "calc(100vh - 210px)",
+      initialValue: "",
+      hideModeSwitch: true,
+      hooks: {
+        addImageBlobHook: function (fileOrBlob, callback, source) {
+          var fd = new FormData();
+          fd.append("file", fileOrBlob);
+          layer.load();
+          $.ajax({
+            type: "POST",
+            url: "/api/v1/upload",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+              layer.closeAll("loading");
+              if (res.success) {
+                callback(res.data.url, res.data.name);
+              } else {
+                layer.msg(res.message, { icon: 5 });
+              }
+            },
+            error: function (jqXHR, textStatus, errorMessage) {
+              layer.msg("文件上传失败", { icon: 5 });
+              layer.closeAll("loading");
+            },
+          });
+          return false;
+        },
+      },
+    });
+
+    setInitialData();
+
+    $("#js_showModalBtn").on("click", function () {
+      var formData = $writeForm.serializeJSON();
+      var content = editor.getMarkdown();
+      if (!formData.title) {
+        layer.msg("请输入标题", { icon: 2 });
+        return;
+      }
+      if (!content) {
+        layer.msg("请输入正文", { icon: 2 });
+        return;
+      }
+      if (window.initialBlogId) {
+        $writeModal.modal("show");
+        return;
+      }
+      setPathname(formData.title, function (data) {
+        $modalForm.find("input[name='pathname']").val(data.pathname);
+        $writeModal.modal("show");
+      });
+    });
+
+    $modalForm.on("submit", function (evt) {
+      evt.preventDefault();
+      var writeFormData = $writeForm.serializeJSON();
+      var modalFormData = $modalForm.serializeJSON();
+      if (!modalFormData.pathname) {
+        layer.msg("请输入路径", { icon: 2 });
+        return;
+      }
+      if (!modalFormData.tagIds) {
+        layer.msg("请选择标签", { icon: 2 });
+        return;
+      }
+      if (!modalFormData.categoryId) {
+        layer.msg("请选择分类", { icon: 2 });
+        return;
+      }
+      if (!modalFormData.status) {
+        layer.msg("请选择发布状态", { icon: 2 });
+        return;
+      }
+      writeFormData.content = editor.getMarkdown();
+      $.ajax({
+        type: window.initialBlogId ? "PUT" : "POST",
+        url: initialBlogId ? "/api/v1/blog/" + initialBlogId : "/api/v1/blog",
+        data: Object.assign(modalFormData, writeFormData),
+        success: function (res) {
+          if (res.success) {
+            layer.alert(
+              res.message,
+              {
+                closeBtn: 0,
+              },
+              function () {
+                window.location.href = "/admin/write.html?id=" + res.data;
+              }
+            );
+          } else {
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    });
+
+    function setInitialData() {
+      if (!window.initialBlogId) {
+        return;
+      }
+      layer.load();
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/blog/" + window.initialBlogId,
+        success: function (res) {
+          layer.closeAll("loading");
+          if (!res.success) {
+            layer.msg(res.message, { icon: 5 });
+            return;
+          }
+          editor.setMarkdown(res.data.content);
+          $writeForm.find("input[name='title']").val(res.data.title);
+          $modalForm.find("input[name='pathname']").val(res.data.pathname);
+          $modalForm.find("input[name='summary']").val(res.data.summary);
+          $modalForm.find("input:radio[name='categoryId'][value='" + res.data.categoryId + "']").prop("checked", true);
+          $.each(res.data.Tags, function (i, tag) {
+            $modalForm.find("input:checkbox[name='tagIds[]'][value='" + tag.id + "']").prop("checked", true);
+          });
+          $modalForm.find("input:radio[name='status'][value='" + res.data.status + "']").prop("checked", true);
+        },
+      });
+    }
+
+    function autoSave() {
+      if (!window.initialBlogId) {
+        return;
+      }
+      var writeFormData = $writeForm.serializeJSON();
+      var modalFormData = $modalForm.serializeJSON();
+      if (!modalFormData.pathname) {
+        return;
+      }
+      if (!modalFormData.tagIds) {
+        return;
+      }
+      if (!modalFormData.categoryId) {
+        return;
+      }
+      if (!modalFormData.status) {
+        return;
+      }
+      writeFormData.content = editor.getMarkdown();
+      $.ajax({
+        type: window.initialBlogId ? "PUT" : "POST",
+        url: initialBlogId ? "/api/v1/blog/" + initialBlogId : "/api/v1/blog",
+        data: Object.assign(modalFormData, writeFormData),
+        success: function (res) {
+          if (res.success) {
+            console.log("AUTO SAVE SUCCESS!");
+          } else {
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    }
+
+    function setPathname(title, callback) {
+      layer.load();
+      $.ajax({
+        type: "POST",
+        url: "/api/v1/getFullUrlByBlogTitle",
+        data: title,
+        success: function (res) {
+          layer.closeAll("loading");
+          if (res.success) {
+            callback(res.data);
+          }
+        },
+      });
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "./blank.html" %}
+
+<!-- Body -->
+{% block body %}
+<div id="js_loginPage" class="login-page">
+  <form id="js_loginForm" class="login__form" action="#">
+    <h2 class="login__form__title">Login</h2>
+    <input type="hidden" name="code" value="{{ code }}" />
+
+    <div class="form-group">
+      <label class="control-label">Email</label>
+      <div class="form-control-static">
+        <input class="form-control" name="email" type="email" placeholder="Email" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">Password</label>
+      <div class="form-control-static">
+        <input class="form-control" name="password" type="password" placeholder="Password" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">Captcha</label>
+      <div class="form-control-static">
+        <div class="row">
+          <div class="col-xs-8">
+            <input class="form-control" name="captcha" type="text" placeholder="Captcha" />
+          </div>
+          <div class="col-xs-4">
+            <div id="js_captcha" class="login__form__captcha"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="form-control-static">
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+<!-- Foot -->
+{% block foot %}
+<script>
+  $(document).ready(function () {
+    setCaptcha();
+
+    $("#js_captcha").on("click", function () {
+      setCaptcha();
+    });
+
+    function setCaptcha() {
+      $.ajax({
+        type: "GET",
+        url: "/api/v1/captcha",
+        dataType: "json",
+        success: function (res) {
+          if (res.success) {
+            $("#js_captcha").html(res.data);
+          } else {
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    }
+
+    $("#js_loginForm").on("submit", function (evt) {
+      evt.preventDefault();
+      var formData = $(this).serializeJSON();
+      layer.load();
+      $.ajax({
+        type: "POST",
+        url: "/api/v1/login",
+        data: formData,
+        success: function (res) {
+          layer.closeAll("loading");
+          if (res.success) {
+            Cookies.set("token", res.data);
+            window.location.href = "/admin/blogs.html";
+          } else {
+            setCaptcha();
+            layer.msg(res.message, { icon: 5 });
+          }
+        },
+      });
+    });
+  });
+</script>
+{% endblock %}

@@ -6,9 +6,7 @@ class BlogController extends Controller {
   async list() {
     const { ctx, service } = this;
     try {
-      const blogs = await service.blog.findAll({
-        order: [["id", "DESC"]],
-      });
+      const blogs = await service.blog.findAll();
       ctx.body = { success: true, message: "操作成功", data: blogs };
     } catch (e) {
       ctx.logger.error("Error while BlogController.list, stack: ", e);

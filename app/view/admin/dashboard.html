@@ -1,0 +1,40 @@
+{% extends "./base.html" %}
+
+<!-- Body -->
+{% block body %}
+<div class="container">
+  {% if blog %}
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">博文分析</div>
+        <div class="panel-body">
+          <p><b>总字数</b>：{{ blog.totalWordCount }}</p>
+          <p><b>文章数</b>：{{ blog.count }}</p>
+          <p><b>阅读数</b>：{{ blog.totalRead }}</p>
+          <p><b>点赞数</b>：{{ blog.totalLike }}</p>
+          <div><b>讨厌数</b>：{{ blog.totalDislike }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">评论分析</div>
+        <div class="panel-body">
+          <p><b>总评论数</b>：0</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">访问分析</div>
+        <div class="panel-body">
+          <p><b>今日访问数</b>：0</p>
+          <p><b>总访问数</b>：0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

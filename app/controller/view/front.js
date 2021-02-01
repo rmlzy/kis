@@ -28,7 +28,7 @@ class FrontViewController extends Controller {
   }
 
   async render404() {
-    await this.ctx.render("404.html");
+    await this.ctx.render("front/404.html");
   }
 
   async renderHome() {
@@ -41,7 +41,7 @@ class FrontViewController extends Controller {
     } catch (e) {
       // ignore
     }
-    await ctx.render("home.html", {
+    await ctx.render("front/home.html", {
       blogs,
       categories,
     });
@@ -58,7 +58,7 @@ class FrontViewController extends Controller {
     } catch (e) {
       // ignore
     }
-    await ctx.render("home.html", {
+    await ctx.render("front/home.html", {
       blogs,
       categories,
     });
@@ -95,7 +95,7 @@ class FrontViewController extends Controller {
     ctx.runInBackground(async () => {
       await ctx.service.blog.update({ readCount: blog.readCount + 1 }, { where: { pathname } });
     });
-    await ctx.render("blog.html", {
+    await ctx.render("front/blog.html", {
       title: blog.title,
       blog,
     });
