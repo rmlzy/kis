@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "blueimp-md5": "^2.16.0",
+    "cheerio": "^1.0.0-rc.5",
     "dayjs": "^1.8.24",
     "egg": "^2.15.1",
     "egg-i18n": "^2.1.1",
@@ -26,6 +27,7 @@
     "markdown-it": "^10.0.0",
     "mysql2": "^2.1.0",
     "svg-captcha": "^1.4.0",
+    "turndown": "^7.0.0",
     "ua-parser-js": "^0.7.21",
     "uuid": "^7.0.3"
   },

@@ -4,6 +4,8 @@ const MarkdownIt = require("markdown-it");
 const hljs = require("highlight.js");
 const md5 = require("blueimp-md5");
 const jwt = require("jsonwebtoken");
+const Turndown = require("turndown");
+
 const md = MarkdownIt({
   html: true,
   linkify: true,
@@ -25,6 +27,11 @@ module.exports = {
 
   md2html(markdown) {
     return md.render(markdown);
+  },
+
+  html2md(html) {
+    const td = new Turndown();
+    return td.turndown(html);
   },
 
   calcReadTime(wordCount) {

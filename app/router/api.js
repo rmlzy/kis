@@ -13,6 +13,7 @@ module.exports = (app) => {
   router.post(`/api/${v}/login`, controller.api.common.login);
   router.post(`/api/${v}/upload`, logged(), controller.api.common.upload);
   router.post(`/api/${v}/check-token`, controller.api.common.checkToken);
+  router.post(`/api/${v}/from-yuque`, controller.api.common.fromYuque);
   router.post(`/api/${v}/check-tian-secret`, controller.api.blog.checkTianSecret);
 
   // User

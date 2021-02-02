@@ -4,6 +4,7 @@ const Controller = require("egg").Controller;
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs-extra");
 const svgCaptcha = require("svg-captcha");
+const cheerio = require("cheerio");
 
 class CommonController extends Controller {
   /**
@@ -94,6 +95,51 @@ class CommonController extends Controller {
       ctx.body = { success: true, message: "Token 校验成功", data: userId };
     } else {
       ctx.body = { success: false, message: "Token 校验失败" };
+    }
+  }
+
+  async _getYuqueBookId(url) {
+    const { ctx } = this;
+    const prevFlag = "Book%22%2C%22target_id%22%3A";
+    const lastFlag = "%2C%22scope%22%3A0%2C%22";
+    let bookId = "";
+    try {
+      const res = await ctx.curl(url, { dataType: "text" });
+      const html = res.data;
+      const prevIndex = html.indexOf(prevFlag);
+      const lastIndex = html.indexOf(lastFlag);
+      bookId = html.substring(prevIndex, lastIndex).replace(prevFlag, "");
+    } catch (e) {
+      // pass
+    }
+    return bookId;
+  }
+
+  async _getYuqueNoteId(url) {
+    const temp = url.split("/");
+    return temp[temp.length - 1];
+  }
+
+  async fromYuque() {
+    const { ctx } = this;
+    const { url } = ctx.request.body;
+    const bookId = await this._getYuqueBookId(url);
+    const noteId = await this._getYuqueNoteId(url);
+    if (!bookId) {
+      ctx.body = { success: false, message: "未抓取到有效内容" };
+      return;
+    }
+    let markdown = "";
+    try {
+      const res = await ctx.curl(`https://www.yuque.com/api/docs/${noteId}?book_id=${bookId}`, { dataType: "json" });
+      markdown = ctx.helper.html2md(res.data.data.content);
+    } catch (e) {
+      // pass
+    }
+    if (markdown) {
+      ctx.body = { success: true, message: "操作成功", data: markdown };
+    } else {
+      ctx.body = { success: false, message: "未抓取到有效内容" };
     }
   }
 }
