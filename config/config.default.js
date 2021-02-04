@@ -10,7 +10,7 @@ module.exports = (appInfo) => {
   config.domain = "http://127.0.0.1:1025";
 
   // 静态文件版本
-  config.version = "2021-01-27";
+  config.version = "2021-02-04";
 
   // TDK
   config.rmlzy = "远子";
