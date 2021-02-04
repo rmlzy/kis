@@ -878,7 +878,7 @@ body {
 }
 .kis__article .avatar {
   display: inline-block;
-  width: 30px;
+  width: 25px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -887,7 +887,7 @@ body {
   align-items: center;
 }
 .kis__desc .cupid {
-  width: 20px;
+  width: 30px;
   background: transparent;
   margin-right: 5px;
 }
