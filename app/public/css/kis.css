@@ -815,9 +815,6 @@ body {
   padding: 30px 15px;
 }
 .kis__hd {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 30px;
 }
 .kis__hd h1 {
@@ -888,7 +885,11 @@ body {
 .kis__desc {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+}
+.kis__desc .cupid {
+  width: 20px;
+  background: transparent;
+  margin-right: 5px;
 }
 .kis__divider {
   width: 100%;
